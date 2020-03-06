@@ -62,10 +62,22 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "flutter_plugin_android_lifecycle",
+      "rootUri": "file:///Users/momorutkin/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_plugin_android_lifecycle-1.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/momorutkin/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "2.2"
+    },
+    {
+      "name": "google_maps_flutter",
+      "rootUri": "file:///Users/momorutkin/flutter/.pub-cache/hosted/pub.dartlang.org/google_maps_flutter-0.5.24+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
     },
     {
       "name": "http",
@@ -188,7 +200,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-03-06T17:48:46.805552Z",
+  "generated": "2020-03-06T18:11:00.945820Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }
