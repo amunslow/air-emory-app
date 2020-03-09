@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'map_widget.dart';
 import 'placeholder_widget.dart';
 import 'report_widget.dart';
 
@@ -13,7 +14,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final List<Widget> _children = [ // list of our final widgets (pages)
    ReportWidget(),
-   PlaceholderWidget(Colors.white),
+   MapWidget(),
    PlaceholderWidget(Colors.green)
  ];
 
