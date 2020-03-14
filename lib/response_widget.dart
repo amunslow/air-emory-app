@@ -5,8 +5,9 @@ class ResponseWidget extends StatelessWidget {
   final String temperature;
   final String humidity;
   final String pmfine;
+  final int i;
 
-  ResponseWidget(this.timestamp, this.temperature, this.humidity, this.pmfine);
+  ResponseWidget(this.timestamp, this.temperature, this.humidity, this.pmfine, this.i);
 
   @override
   Widget build(BuildContext context) {
