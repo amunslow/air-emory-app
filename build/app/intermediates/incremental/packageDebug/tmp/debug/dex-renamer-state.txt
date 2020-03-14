@@ -1,4 +1,4 @@
-#Thu Feb 13 19:20:35 EST 2020
+#Sat Mar 14 15:26:51 EDT 2020
 base.0=/Users/annamunslow/repos/air-emory-app/air-emory-app/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

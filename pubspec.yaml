@@ -20,6 +20,8 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.12.0+4
+  intl: ^0.16.1
+  instant: ^0.3.2
 
   google_maps_flutter: any
 
