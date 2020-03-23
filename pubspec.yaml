@@ -14,16 +14,20 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   http: ^0.12.0+4
-  intl: ^0.16.1
-  instant: ^0.3.2
 
   google_maps_flutter: any
+
+  fluster: any
+  meta: any
+  flutter_cache_manager: any
+  instant: any
+  intl: any
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
