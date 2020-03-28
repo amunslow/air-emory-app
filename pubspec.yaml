@@ -22,6 +22,7 @@ dependencies:
   http: ^0.12.0+4
   intl: ^0.16.1
   instant: ^0.3.2
+  fl_chart: ^0.8.5
 
   google_maps_flutter: any
 

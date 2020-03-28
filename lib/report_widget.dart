@@ -7,6 +7,7 @@ import 'package:instant/instant.dart';
 import 'response_widget.dart';
 import 'pmStats_widget.dart';
 import 'dart:math';
+import 'lineChart_widget.dart';
 
 // Request to get the first and second sheet(current day, yesterday)
 Future<List<Post>> fetchPost() async {
@@ -120,7 +121,7 @@ String get12HrTimestamp() {
   return timestamp;
 }
 
-// Function to get the total PM2.5 from a List<Entry> using the timestamp 24 hours before the last data entry
+// Function to get the total PM2.5 from a List<Entry> using the timestamp 12 hours before the last data entry
 PMStats getTotalPm(List<Entry> entryList) {
   List<PMAvg> total = new List<PMAvg>();
   PMAvg p = PMAvg(0.0, 0.0, 0);
@@ -141,7 +142,11 @@ PMStats getTotalPm(List<Entry> entryList) {
     int entryhour = int.parse(entryTime.substring(11,13));
     String entrydate = entryTime.substring(0,10);
     if ((entrydate == date24 && entryhour >= hour24) || (entrydate == currdate && entryhour <= currhour)) {
-      index = entryhour % hour24;
+      if (hour24 == 0) {
+        index = entryhour;
+      } else {
+        index = entryhour % hour24;
+      }
       total[index].numEntries++;
       total[index].total += double.parse(entryList[i].pmfine.t);
       total[index].avg = total[index].numEntries / total[index].total;
@@ -155,6 +160,8 @@ PMStats getTotalPm(List<Entry> entryList) {
   }
   return PMStats(total, max, min);
 }
+
+
 
 // The AQI equation
 // https://forum.airnowtech.org/t/the-aqi-equation/169
@@ -274,7 +281,7 @@ class _ReportState extends State<ReportWidget> {
                     itemBuilder: (context, index) {
                       Post curr = snapshot.data[0];
                       Post yest = snapshot.data[1];
-                      if (curr.feed.entries.length == 0) {
+                      if (curr.feed.entries.length == 0 || curr.feed.entries == null) {
                         return Column(children: <Widget>[
                         Text('Air Quality Report', textAlign: TextAlign.center, style: TextStyle(fontSize: 28)),
                         Text('generated at ' + DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTimeToZone(zone: "EST", datetime: DateTime.now())) + " EST", textAlign: TextAlign.center, style:  TextStyle(fontSize: 15)),
@@ -282,14 +289,16 @@ class _ReportState extends State<ReportWidget> {
                       ],);
                       } else {
                         ResponseWidget lastent = lastEntry(curr.feed.entries);
-                      int cydata = currAndYestData(curr.feed.entries);
-                      int aqi = getAqi(cydata, curr.feed.entries, yest.feed.entries);
-                      return Column(children: <Widget>[
-                        Text('Air Quality Report', textAlign: TextAlign.center, style: TextStyle(fontSize: 28)),
-                        Text('generated at ' + DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTimeToZone(zone: "EST", datetime: DateTime.now())) + " EST", textAlign: TextAlign.center, style:  TextStyle(fontSize: 15)),
-                        lastent,
-                        Text('AQI: ' + aqi.toString(),  style: TextStyle(fontSize: 20),)
-                      ],);
+                        int cydata = currAndYestData(curr.feed.entries);
+                        int aqi = getAqi(cydata, curr.feed.entries, yest.feed.entries);
+                        return Column(children: <Widget>[
+                          Text('Air Quality Report', textAlign: TextAlign.center, style: TextStyle(fontSize: 28)),
+                          Text('generated at ' + DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTimeToZone(zone: "EST", datetime: DateTime.now())) + " EST", textAlign: TextAlign.center, style:  TextStyle(fontSize: 15)),
+                          lastent,
+                          Text('AQI: ' + aqi.toString(),  style: TextStyle(fontSize: 20),),
+                          //SimpleLineChart.withSampleData(),
+                          LineChartSample2(entries: curr.feed.entries),
+                        ],);
                       }
                     }                  
                   );
