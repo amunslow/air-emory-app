@@ -87,7 +87,7 @@ class PMAvg extends StatelessWidget {
 
 // Function to get the last data entry and its list index
 ResponseWidget lastEntry(List<Entry> entryList) {
-  var timestamp = DateFormat('yyyy-MM-dd').format(dateTimeToZone(zone: "EST", datetime: DateTime.now()));
+  var timestamp = DateFormat('yyyy-MM-dd').format(dateTimeToZone(zone: "UTC", datetime: DateTime.now()).subtract(Duration(hours:4)));
   int i;
   for (i = entryList.length-1; i >= 0; i--) {
     if (timestamp == entryList[i].timestamp.t.substring(0,10)) {
@@ -99,8 +99,8 @@ ResponseWidget lastEntry(List<Entry> entryList) {
 
 // Function to tell if the sheet contains current day and yesterday data
 int currAndYestData(List<Entry> entryList) {
-  var currTime = DateFormat('yyyy-MM-dd').format(dateTimeToZone(zone: "EST", datetime: DateTime.now()));
-  var yestTime = DateFormat('yyyy-MM-dd').format(dateTimeToZone(zone: "EST", datetime: DateTime.now().subtract(Duration(days:1))));
+  var currTime = DateFormat('yyyy-MM-dd').format(dateTimeToZone(zone: "UTC", datetime: DateTime.now()).subtract(Duration(hours:4)));
+  var yestTime = DateFormat('yyyy-MM-dd').format(dateTimeToZone(zone: "UTC", datetime: DateTime.now()).subtract(Duration(hours:4, days:1)));
   int curr = 0;
   int yest = 0;
   for (int i = 0; i < entryList.length; i++) {
@@ -116,7 +116,7 @@ int currAndYestData(List<Entry> entryList) {
 
 // Function to get the timestamp 12 hours before the current time
 String get12HrTimestamp() {
-  var timestamp = DateFormat('yyyy-MM-dd HH:mm').format(dateTimeToZone(zone: "EST", datetime: DateTime.now().subtract(Duration(hours:12))));
+  var timestamp = DateFormat('yyyy-MM-dd HH:mm').format(dateTimeToZone(zone: "UTC", datetime: DateTime.now()).subtract(Duration(hours:16)));
   print('12 hr timestamp: ' + timestamp);
   return timestamp;
 }
@@ -134,7 +134,7 @@ PMStats getTotalPm(List<Entry> entryList) {
   String timepast = get12HrTimestamp();
   int hour24 = int.parse(timepast.substring(11,13));
   String date24 = timepast.substring(0,10);
-  String currTime = DateFormat('yyyy-MM-dd HH:mm').format(dateTimeToZone(zone: "EST", datetime: DateTime.now()));
+  String currTime = DateFormat('yyyy-MM-dd HH:mm').format(dateTimeToZone(zone: "UTC", datetime: DateTime.now()).subtract(Duration(hours:4)));
   int currhour = int.parse(currTime.substring(11,13));
   String currdate = currTime.substring(0,10);
   for (int i = entryList.length-1; i >= 0; i--) {
@@ -284,7 +284,7 @@ class _ReportState extends State<ReportWidget> {
                       if (curr.feed.entries.length == 0 || curr.feed.entries == null) {
                         return Column(children: <Widget>[
                         Text('Air Quality Report', textAlign: TextAlign.center, style: TextStyle(fontSize: 28)),
-                        Text('generated at ' + DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTimeToZone(zone: "EST", datetime: DateTime.now())) + " EST", textAlign: TextAlign.center, style:  TextStyle(fontSize: 15)),
+                        Text('generated at ' + DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTimeToZone(zone: "UTC", datetime: DateTime.now()).subtract(Duration(hours:4))) + " EST", textAlign: TextAlign.center, style:  TextStyle(fontSize: 15)),
                         Text('No Data', textAlign: TextAlign.center, style: TextStyle(fontSize: 25))
                       ],);
                       } else {
@@ -293,7 +293,7 @@ class _ReportState extends State<ReportWidget> {
                         int aqi = getAqi(cydata, curr.feed.entries, yest.feed.entries);
                         return Column(children: <Widget>[
                           Text('Air Quality Report', textAlign: TextAlign.center, style: TextStyle(fontSize: 28)),
-                          Text('generated at ' + DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTimeToZone(zone: "EST", datetime: DateTime.now())) + " EST", textAlign: TextAlign.center, style:  TextStyle(fontSize: 15)),
+                          Text('generated at ' + DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTimeToZone(zone: "UTC", datetime: DateTime.now()).subtract(Duration(hours:4))) + " EST", textAlign: TextAlign.center, style:  TextStyle(fontSize: 15)),
                           lastent,
                           Text('AQI: ' + aqi.toString(),  style: TextStyle(fontSize: 20),),
                           //SimpleLineChart.withSampleData(),
