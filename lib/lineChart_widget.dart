@@ -88,24 +88,22 @@ class _LineChartSample2State extends State<LineChartSample2> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Container(),
-        AspectRatio(
-          aspectRatio: 1.70,
-          child: Container(
-            decoration: BoxDecoration(
-              /*
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(18),
-                ),*/
-                color: const Color(0xff232d37)),
-            child: Padding(
-              padding: const EdgeInsets.only(right: 18.0, left: 12.0, top: 24, bottom: 12),
-              child: LineChart(
-                showAvg ? avgData() : mainData(),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(12),
+                  ),
+                  color: Colors.white),//const Color(0xff232d37)),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 34.0, left: 34.0, top: 12, bottom: 8),
+                child: LineChart(
+                  showAvg ? avgData() : mainData(),
+                ),
               ),
             ),
-          ),
-        ),
+          
         SizedBox(
           width: 60,
           height: 34,
@@ -118,7 +116,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
             child: Text(
               'avg',
               style: TextStyle(
-                  fontSize: 12, color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white),
+                  fontSize: 12, color: showAvg ? Color(0xff37434d).withOpacity(0.5) : Color(0xff37434d)),
             ),
           ),
         ),
@@ -130,7 +128,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
     return LineChartData(
       gridData: FlGridData(
         show: true,
-        drawVerticalLine: true,
+        drawVerticalLine: false,//true,
+        drawHorizontalLine: false,//true,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
             color: Color(0xff37434d),
@@ -152,57 +151,11 @@ class _LineChartSample2State extends State<LineChartSample2> {
           textStyle:
               TextStyle(color: const Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
-            switch (value.toInt()) {
-              case 0:
-                return '0';
-              case 1:
-                return '1';
-              case 2:
-                return '2';
-              case 3:
-                return '3';
-              case 4:
-                return '4';
-              case 5:
-                return '5';
-              case 6:
-                return '6';
-              case 7:
-                return '7';
-              case 8:
-                return '8';
-              case 9:
-                return '9';
-              case 10:
-                return '10';
-              case 11:
-                return '11';
-              case 12:
-                return '12';
-              case 13:
-                return '13';
-              case 14:
-                return '14';
-              case 15:
-                return '15';
-              case 16:
-                return '16';
-              case 17:
-                return '17';
-              case 18:
-                return '18';
-              case 19:
-                return '19';
-              case 20:
-                return '20';
-              case 21:
-                return '21';
-              case 22:
-                return '22';
-              case 23:
-                return '23';
+            if (value.toInt() %2 == 0) {
+              return value.toInt().toString();
+            } else {
+              return '';
             }
-            return '';
           },
           margin: 8,
         ),
@@ -214,23 +167,31 @@ class _LineChartSample2State extends State<LineChartSample2> {
             fontSize: 15,
           ),
           getTitles: (value) {
-            if (value.toInt() % 10 == 0) {
+            if (value.toInt() % 5 == 0) {
               return value.toString();
             } else {
               return '';
             }
           },
-          reservedSize: 28,
+          //reservedSize: 28,
           margin: 12,
         ),
       ),
       axisTitleData: const FlAxisTitleData(
+        topTitle: AxisTitle(
+          showTitle: true, 
+          titleText: 'PM\u2082.\u2085 vs. Time',
+          textStyle: TextStyle(
+            color: const Color(0xff68737d),//Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0,
+        )),
         leftTitle: AxisTitle(
           showTitle: true, 
           titleText: 'PM\u2082.\u2085 (\u03BCg/m\u00B3)', 
           margin: 10,
           textStyle: TextStyle(
-            color: Colors.white,
+            color: const Color(0xff68737d),//Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 10,
           ),
@@ -240,14 +201,14 @@ class _LineChartSample2State extends State<LineChartSample2> {
           margin: 0,
           titleText: 'hour',
           textStyle: TextStyle(
-            color: Colors.white,
+            color: const Color(0xff68737d),//Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 10,
           ),
           textAlign: TextAlign.center)
       ),
       borderData:
-          FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
+          FlBorderData(show: true, border: Border(left: BorderSide(color: const Color(0xff37434d), width: 1), bottom: BorderSide(color: const Color(0xff37434d), width: 1))),
       minX: 0,
       minY: 0,
       lineBarsData: [
@@ -273,7 +234,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
     return LineChartData(
       gridData: FlGridData(
         show: true,
-        drawVerticalLine: true,
+        drawVerticalLine: false,
+        drawHorizontalLine: false,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
             color: Color(0xff37434d),
@@ -295,57 +257,11 @@ class _LineChartSample2State extends State<LineChartSample2> {
           textStyle:
               TextStyle(color: const Color(0xff68737d), fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
-            switch (value.toInt()) {
-              case 0:
-                return '0';
-              case 1:
-                return '1';
-              case 2:
-                return '2';
-              case 3:
-                return '3';
-              case 4:
-                return '4';
-              case 5:
-                return '5';
-              case 6:
-                return '6';
-              case 7:
-                return '7';
-              case 8:
-                return '8';
-              case 9:
-                return '9';
-              case 10:
-                return '10';
-              case 11:
-                return '11';
-              case 12:
-                return '12';
-              case 13:
-                return '13';
-              case 14:
-                return '14';
-              case 15:
-                return '15';
-              case 16:
-                return '16';
-              case 17:
-                return '17';
-              case 18:
-                return '18';
-              case 19:
-                return '19';
-              case 20:
-                return '20';
-              case 21:
-                return '21';
-              case 22:
-                return '22';
-              case 23:
-                return '23';
+             if (value.toInt() %2 == 0) {
+              return value.toInt().toString();
+            } else {
+              return '';
             }
-            return '';
           },
           margin: 8,
         ),
@@ -357,7 +273,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
             fontSize: 15,
           ),
           getTitles: (value) {
-            if (value.toInt() % 10 == 0) {
+            if (value.toInt() % 5 == 0) {
               return value.toString();
             } else {
               return '';
@@ -368,12 +284,20 @@ class _LineChartSample2State extends State<LineChartSample2> {
         ),
       ),
       axisTitleData: const FlAxisTitleData(
+        topTitle: AxisTitle(
+          showTitle: true, 
+          titleText: 'PM\u2082.\u2085 vs. Time',
+          textStyle: TextStyle(
+            color: Color(0xff37434d),
+            fontWeight: FontWeight.bold,
+            fontSize: 18.0,
+          )),
         leftTitle: AxisTitle(
           showTitle: true, 
           titleText: 'PM\u2082.\u2085 (\u03BCg/m\u00B3)', 
           margin: 10,
           textStyle: TextStyle(
-            color: Colors.white,
+            color: Color(0xff37434d),
             fontWeight: FontWeight.bold,
             fontSize: 10,
           ),
@@ -383,14 +307,14 @@ class _LineChartSample2State extends State<LineChartSample2> {
           margin: 0,
           titleText: 'hour',
           textStyle: TextStyle(
-            color: Colors.white,
+            color: Color(0xff37434d),
             fontWeight: FontWeight.bold,
             fontSize: 10,
           ),
           textAlign: TextAlign.center)
       ),
       borderData:
-          FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
+          FlBorderData(show: true, border: Border(left: BorderSide(color: const Color(0xff37434d), width: 1), bottom:BorderSide(color: const Color(0xff37434d), width: 1))),
       minX: 0,
       minY: 0,
       lineBarsData: [

@@ -8,6 +8,7 @@ import 'response_widget.dart';
 import 'pmStats_widget.dart';
 import 'dart:math';
 import 'lineChart_widget.dart';
+import 'dashboard_widget.dart';
 
 // Request to get the first and second sheet(current day, yesterday)
 Future<List<Post>> fetchPost() async {
@@ -71,18 +72,54 @@ class Value {
   }
 }
 
-class PMAvg extends StatelessWidget {
+class PMAvg  {
    double avg;
    double total;
    int numEntries;
+   PMAvg(this.avg, this.total, this.numEntries);
   
-  PMAvg(this.avg, this.total, this.numEntries);
-
+  //return PMAvg(this.avg, this.total, this.numEntries);
+  /*
   @override
   Widget build(BuildContext context) {
 
     return PMAvg(avg, total, numEntries);
   }
+  */
+}
+
+Material aqiTile(int aqi) {
+  return Material(
+    color: Colors.white,
+    elevation: 14.0,
+    shadowColor: Color(0x802196F3),
+    borderRadius: BorderRadius.circular(24.0),
+    child:Center(
+      child: Padding(
+        padding:const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Aqi',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize:10.0
+                )
+              ),
+              Text(aqi.toString(),
+              style:TextStyle(
+                color: Colors.blue,
+                fontSize:20.0,
+              ))
+            ]
+          )
+        ],
+      ))
+  ));
 }
 
 // Function to get the last data entry and its list index
@@ -91,10 +128,10 @@ ResponseWidget lastEntry(List<Entry> entryList) {
   int i;
   for (i = entryList.length-1; i >= 0; i--) {
     if (timestamp == entryList[i].timestamp.t.substring(0,10)) {
-      return ResponseWidget(entryList[i].timestamp.t, entryList[i].temperature.t, entryList[i].humidity.t, entryList[i].pmfine.t, i);
+      return ResponseWidget(entryList[i].timestamp.t, entryList[i].temperature.t, entryList[i].humidity.t, entryList[i].pmfine.t);
     }
   }
-  return ResponseWidget('No Data', 'No Data', 'No Data', 'No Data', null);
+  return ResponseWidget('No Data', 'No Data', 'No Data', 'No Data');
 }
 
 // Function to tell if the sheet contains current day and yesterday data
@@ -125,7 +162,7 @@ String get12HrTimestamp() {
 PMStats getTotalPm(List<Entry> entryList) {
   List<PMAvg> total = new List<PMAvg>();
   PMAvg p = PMAvg(0.0, 0.0, 0);
-  for (int j = 0; j < 12; j++) {
+  for (int j = 0; j < 13; j++) {
     total.add(p);
   }
   double max = 0.0;
@@ -133,20 +170,30 @@ PMStats getTotalPm(List<Entry> entryList) {
   int index;
   String timepast = get12HrTimestamp();
   int hour24 = int.parse(timepast.substring(11,13));
+  int min24 = int.parse(timepast.substring(14, 16));
   String date24 = timepast.substring(0,10);
   String currTime = DateFormat('yyyy-MM-dd HH:mm').format(dateTimeToZone(zone: "UTC", datetime: DateTime.now()).subtract(Duration(hours:4)));
   int currhour = int.parse(currTime.substring(11,13));
+  print('currhour: ' + currhour.toString());
+  print('date 12: ' + date24);
   String currdate = currTime.substring(0,10);
+  print('currdate: ' + currdate);
   for (int i = entryList.length-1; i >= 0; i--) {
     String entryTime = entryList[i].timestamp.t;
     int entryhour = int.parse(entryTime.substring(11,13));
+    int entrymin = int.parse(entryTime.substring(14,16));
     String entrydate = entryTime.substring(0,10);
-    if ((entrydate == date24 && entryhour >= hour24) || (entrydate == currdate && entryhour <= currhour)) {
+    if ((currdate != date24 && entrydate == date24 && entryhour >= hour24) || (currdate != date24 && entrydate == currdate && entryhour <= currhour) || (currdate == date24 && entrydate == currdate && entryhour >= hour24 && entryhour <= currhour)) {
+      if (entryhour == hour24 && entrymin < min24) {
+        print(hour24.toString()+':'+min24.toString()+' is over the 12 hours');
+        continue;
+      }
       if (hour24 == 0) {
         index = entryhour;
       } else {
         index = entryhour % hour24;
       }
+      print('entryTime: ' + entryTime + ', index: ' + index.toString());
       total[index].numEntries++;
       total[index].total += double.parse(entryList[i].pmfine.t);
       total[index].avg = total[index].numEntries / total[index].total;
@@ -276,41 +323,49 @@ class _ReportState extends State<ReportWidget> {
             future: post,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                  return ListView.builder(
-                    itemCount: 1,
-                    itemBuilder: (context, index) {
+                  //return ListView.builder(
+                    //itemCount: 1,
+                    //itemBuilder: (context, index) {
                       Post curr = snapshot.data[0];
                       Post yest = snapshot.data[1];
                       if (curr.feed.entries.length == 0 || curr.feed.entries == null) {
                         return Column(children: <Widget>[
-                        Text('Air Quality Report', textAlign: TextAlign.center, style: TextStyle(fontSize: 28)),
-                        Text('generated at ' + DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTimeToZone(zone: "UTC", datetime: DateTime.now()).subtract(Duration(hours:4))) + " EST", textAlign: TextAlign.center, style:  TextStyle(fontSize: 15)),
+                        //Text('Air Quality Report', textAlign: TextAlign.center, style: TextStyle(fontSize: 28)),
+                        //Text('generated at ' + DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTimeToZone(zone: "UTC", datetime: DateTime.now()).subtract(Duration(hours:4))) + " EST", textAlign: TextAlign.center, style:  TextStyle(fontSize: 15)),
                         Text('No Data', textAlign: TextAlign.center, style: TextStyle(fontSize: 25))
                       ],);
                       } else {
+                        
                         ResponseWidget lastent = lastEntry(curr.feed.entries);
                         int cydata = currAndYestData(curr.feed.entries);
                         int aqi = getAqi(cydata, curr.feed.entries, yest.feed.entries);
+                        LineChartSample2 lineChart = LineChartSample2(entries:curr.feed.entries);
+                        return Dashboard(aqi:aqi, lastEntry: lastent, lineChart: lineChart);
+                        //return Column(children:<Widget>[)]);
+
+
+                        /*
                         return Column(children: <Widget>[
                           Text('Air Quality Report', textAlign: TextAlign.center, style: TextStyle(fontSize: 28)),
                           Text('generated at ' + DateFormat('yyyy-MM-dd HH:mm:ss').format(dateTimeToZone(zone: "UTC", datetime: DateTime.now()).subtract(Duration(hours:4))) + " EST", textAlign: TextAlign.center, style:  TextStyle(fontSize: 15)),
-                          lastent,
-                          Text('AQI: ' + aqi.toString(),  style: TextStyle(fontSize: 20),),
+                          //lastent,
+                          aqiTile(aqi),
+                          //Text('AQI: ' + aqi.toString(),  style: TextStyle(fontSize: 20),),
                           //SimpleLineChart.withSampleData(),
                           LineChartSample2(entries: curr.feed.entries),
-                        ],);
+                        ],);*/
                       }
-                    }                  
-                  );
+                   // }                  
+                 // );
               } else if (snapshot.hasError) {
                   return Text("${snapshot.error}");
               }
               // By default, show a loading spinner.
               return Center(child: CircularProgressIndicator());
             },
-          ),
+          //),
         ),
-      );
+      ));
   }
 }
 
