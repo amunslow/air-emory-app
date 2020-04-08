@@ -174,7 +174,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
             }
           },
           //reservedSize: 28,
-          margin: 12,
+          margin: 8,
         ),
       ),
       axisTitleData: const FlAxisTitleData(
@@ -189,7 +189,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
         leftTitle: AxisTitle(
           showTitle: true, 
           titleText: 'PM\u2082.\u2085 (\u03BCg/m\u00B3)', 
-          margin: 10,
+          margin: 18,
           textStyle: TextStyle(
             color: const Color(0xff68737d),//Colors.white,
             fontWeight: FontWeight.bold,
@@ -268,7 +268,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
         leftTitles: SideTitles(
           showTitles: true,
           textStyle: TextStyle(
-            color: const Color(0xff67727d),
+            color: const Color(0xff68737d), 
             fontWeight: FontWeight.bold,
             fontSize: 15,
           ),
@@ -279,8 +279,8 @@ class _LineChartSample2State extends State<LineChartSample2> {
               return '';
             }
           },
-          reservedSize: 28,
-          margin: 12,
+          //reservedSize: 28,
+          margin: 8,
         ),
       ),
       axisTitleData: const FlAxisTitleData(
@@ -288,16 +288,16 @@ class _LineChartSample2State extends State<LineChartSample2> {
           showTitle: true, 
           titleText: 'PM\u2082.\u2085 vs. Time',
           textStyle: TextStyle(
-            color: Color(0xff37434d),
+            color: const Color(0xff68737d),
             fontWeight: FontWeight.bold,
             fontSize: 18.0,
           )),
         leftTitle: AxisTitle(
           showTitle: true, 
           titleText: 'PM\u2082.\u2085 (\u03BCg/m\u00B3)', 
-          margin: 10,
+          margin: 18,
           textStyle: TextStyle(
-            color: Color(0xff37434d),
+            color: const Color(0xff68737d), 
             fontWeight: FontWeight.bold,
             fontSize: 10,
           ),
@@ -307,7 +307,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
           margin: 0,
           titleText: 'hour',
           textStyle: TextStyle(
-            color: Color(0xff37434d),
+            color: const Color(0xff68737d), 
             fontWeight: FontWeight.bold,
             fontSize: 10,
           ),
