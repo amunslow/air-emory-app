@@ -14,8 +14,120 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
 
+  Material aqiValuesTile() {
+    return Material(
+    animationDuration: kThemeChangeDuration,
+    color: Colors.white,
+    elevation: 14.0,
+    shadowColor: Color(0x802196F3),
+    borderRadius: BorderRadius.circular(12.0),
+    child:Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(3.0),
+                child:  Text(
+                  'AQI Values',
+                  style: TextStyle(
+                    color: Colors.blueGrey,
+                    fontSize:18.0,
+                    fontWeight: FontWeight.bold,
+                  )
+                )
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                color: Colors.green,
+                child: Padding(
+                  padding:const EdgeInsets.all(3.0),
+                  child: Text('0 to 50',
+                  textAlign: TextAlign.center,
+                    style: TextStyle(
+                    color: Colors.white,
+                    fontSize:20.0,
+                )))),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                color: Colors.yellow,
+                child: Padding(
+                  padding:const EdgeInsets.all(3.0),
+                  child: Text('51 to 100',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                    color: Colors.white,
+                    fontSize:20.0,
+              )))),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                color: Colors.orange,
+                child: Text('101 to 150',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                  color: Colors.white,
+                  fontSize:20.0,
+              ))),
+              Container(
+                color: Colors.red,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding:const EdgeInsets.all(3.0),
+                  child: Text('151 to 200',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                    color: Colors.white,
+                    fontSize:20.0,
+                )))),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                color: Colors.purple,
+                child: Padding(
+                  padding:const EdgeInsets.all(3.0),
+                  child: Text('201 to 300',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                    color: Colors.white,
+                    fontSize:20.0,
+                )))),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                color:  Color.fromRGBO(128, 0, 0, 1),
+                child: Padding(
+                  padding:const EdgeInsets.all(3.0),
+                  child: Text('301 to 500',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                    color: Colors.white,
+                    fontSize:20.0,
+                )))),
+              Container(
+                 width: MediaQuery.of(context).size.width,
+                 child: Padding(
+                    padding:const EdgeInsets.all(3.0),
+                    child:Text('* AQI values above 500 are considered Beyond The AQI', 
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.blueGrey,
+                        fontSize:10.0,
+                        fontWeight: FontWeight.bold,
+                      ))
+                 )
+              )
+              
+            ]
+          )),
+        ],
+      )
+  ));
+  }
+
   Material aqiTile(int aqi) {
   return Material(
+    animationDuration: kThemeChangeDuration,
     color: Colors.white,
     elevation: 14.0,
     shadowColor: Color(0x802196F3),
@@ -30,7 +142,7 @@ class _DashboardState extends State<Dashboard> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Aqi',
+                'AQI',
                 style: TextStyle(
                   color: Colors.blueGrey,
                   fontSize:18.0,
@@ -49,6 +161,24 @@ class _DashboardState extends State<Dashboard> {
         ],
       ))
   ));
+}
+
+// Function to try to parse the double, return No data if unsuccessful
+// Value = the value of the field
+// Field = pmfine, temp, or rh 
+String parseValue(String value, String field) {
+  double val = double.tryParse(value);
+  if (val == null) { 
+  } else {
+    if (field == "pmfine") {
+      return 'PM\u2082\u002e\u2085: ' + val.toStringAsFixed(2) + '\u03BCg/m\u00B3';
+    } else if (field == "temp") {
+      return 'Temperature: ' + val.toStringAsFixed(2) + '\u2103';
+    } else if (field == "rh") {
+      return 'Relative Humidity: ' + val.toStringAsFixed(2) + '%';
+    }
+  }
+  return "No data";
 }
 
 Material lastEntryTile(ResponseWidget lastEntry) {
@@ -81,14 +211,14 @@ Material lastEntryTile(ResponseWidget lastEntry) {
                 )
               ),
               Text(
-                'PM\u2082\u002e\u2085: ' + (double.parse(lastEntry.pmfine)).toStringAsFixed(2) + '\u03BCg/m\u00B3',
+                parseValue(lastEntry.pmfine, "pmfine"),
                 textAlign: TextAlign.left,
                 style:TextStyle(
                   color: Colors.blue,
                   fontSize:15.0,
                 )),
               Text(
-                'Temperature: ' + (double.parse(lastEntry.temperature)).toStringAsFixed(2) + '\u2103',
+                parseValue(lastEntry.temperature, "temp"),
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   color: Colors.blue,
@@ -96,7 +226,7 @@ Material lastEntryTile(ResponseWidget lastEntry) {
                 )
               ),
               Text(
-                'Relative Humidity: ' + (double.parse(lastEntry.humidity)).toStringAsFixed(2) + '%',
+                parseValue(lastEntry.humidity, "rh"),
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   color: Colors.blue,
@@ -131,17 +261,16 @@ Material lastEntryTile(ResponseWidget lastEntry) {
               mainAxisSpacing: 12.0,
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               children: <Widget>[
-                //Expanded(child: Container()),
                 aqiTile(widget.aqi), //aqi 
-                aqiTile(2), //aqi indicator
+                aqiValuesTile(), //aqi indicator
                 aqiTile(3), //aqi tips
                 lastEntryTile(widget.lastEntry), //last data entry
                 aqiTile(5), //daily averages
                 pmChartTile(widget.lineChart), //pm2.5 line chart
               ],
               staggeredTiles: [
-                StaggeredTile.extent(1, 200.0),
-                StaggeredTile.extent(1, 200.0),
+                StaggeredTile.extent(1, 230.0),
+                StaggeredTile.extent(1, 230.0),
                 StaggeredTile.extent(2, 240.0),
                 StaggeredTile.extent(2, 130.0),
                 StaggeredTile.extent(2, 130.0),

@@ -193,7 +193,7 @@ PMStats getTotalPm(List<Entry> entryList) {
       } else {
         index = entryhour % hour24;
       }
-      print('entryTime: ' + entryTime + ', index: ' + index.toString());
+      //print('entryTime: ' + entryTime + ', index: ' + index.toString());
       total[index].numEntries++;
       total[index].total += double.parse(entryList[i].pmfine.t);
       total[index].avg = total[index].numEntries / total[index].total;
