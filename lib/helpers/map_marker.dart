@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:fluster/fluster.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
@@ -12,6 +14,10 @@ class MapMarker extends Clusterable {
   final String id;
   final LatLng position;
   BitmapDescriptor icon;
+  InfoWindow infoWindow;
+  Color color;
+  Function() onPressed;
+  
 
   MapMarker({
     @required this.id,
@@ -20,7 +26,7 @@ class MapMarker extends Clusterable {
     isCluster = false,
     clusterId,
     pointsSize,
-    childMarkerId,
+    childMarkerId, Function() onTap, InfoWindow infoWindow, Color color, Function() onPressed,
   }) : super(
           markerId: id,
           latitude: position.latitude,
@@ -38,5 +44,7 @@ class MapMarker extends Clusterable {
           position.longitude,
         ),
         icon: icon,
+        infoWindow: infoWindow,
+        
       );
 }

@@ -1,11 +1,9 @@
-import 'dart:async';
-
-import 'package:fluster/fluster.dart';
+import 'package:airemory/marker_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'helpers/map_helper.dart';
-import 'helpers/map_marker.dart';
+//import 'helpers/map_helper.dart';
+//import 'helpers/map_marker.dart';
 
 
 
@@ -18,6 +16,32 @@ class MapWidget extends StatefulWidget {
 
 class _MapState extends State<MapWidget> {
 
+ List<Marker> allMarkers = [];
+
+ GoogleMapController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    sensorList.forEach((element) {
+      allMarkers.add(Marker(
+          markerId: MarkerId(element.locationName),
+          draggable: false,
+          onTap: () {
+          print('Marker Tapped');
+        },
+          infoWindow:
+              InfoWindow(title: element.locationName, snippet: element.description),
+    
+          position: element.locationCoords));
+    });
+    
+  }
+
+
+
+  
+/*
   final Completer<GoogleMapController> _mapController = Completer();
 
   /// Set of displayed markers and cluster markers on the map
@@ -65,6 +89,10 @@ class _MapState extends State<MapWidget> {
     LatLng(41.139813, -8.609381),
   ];
 
+
+
+
+
   /// Called when the Google Map widget is created. Updates the map loading state
   /// and inits the markers.
   void _onMapCreated(GoogleMapController controller) {
@@ -76,7 +104,7 @@ class _MapState extends State<MapWidget> {
 
     _initMarkers();
   }
-
+ 
   /// Inits [Fluster] and all the markers with network images and updates the loading state.
   void _initMarkers() async {
     final List<MapMarker> markers = [];
@@ -89,9 +117,27 @@ class _MapState extends State<MapWidget> {
         MapMarker(
           id: _markerLocations.indexOf(markerLocation).toString(),
           position: markerLocation,
+          infoWindow: InfoWindow(
+                title: 'PlatformMarker',
+                snippet: "Hi I'm a Platform Marker",
+              ),
           icon: markerImage,
+          onPressed:(){
+            showModalBottomSheet(
+              context: context, 
+              builder: (builder){
+              return Container(
+                color: Colors.white,
+                child: Text("Hello there"),
+            );
+          });
+         },
         ),
       );
+
+     
+      
+
     }
 
     _clusterManager = await MapHelper.initClusterManager(
@@ -133,7 +179,7 @@ class _MapState extends State<MapWidget> {
     });
   }
 
-
+  */ 
 
 
 
@@ -141,53 +187,47 @@ class _MapState extends State<MapWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Markers and Clusters Example'),
+        title: Text('Markers'),
       ),
       body: Stack(
-        children: <Widget>[
-          // Google Map widget
-          Opacity(
-            opacity: _isMapLoading ? 0 : 1,
-            child: GoogleMap(
-              mapToolbarEnabled: false,
-              initialCameraPosition: CameraPosition(
-                target: LatLng(41.143029, -8.611274),
-                zoom: _currentZoom,
+       children: [Container(
+         height: MediaQuery.of(context).size.height,
+         width: MediaQuery.of(context).size.width,
+         child: GoogleMap(
+           initialCameraPosition: CameraPosition(target: LatLng(40.745803, -73.988213), zoom: 12.0),
+           markers: Set.from(allMarkers),
+           onMapCreated: mapCreated,
+         ),
+       ),
+       Align(
+         alignment: Alignment.bottomCenter,
+          child: InkWell(
+            onTap: movetoAtlanta,
+            child: Container(
+              height:40.0, 
+              width: 40.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0),
+                color: Colors.green
               ),
-              markers: _markers,
-              onMapCreated: (controller) => _onMapCreated(controller),
-              onCameraMove: (position) => _updateMarkers(position.zoom),
+              child: Icon(Icons.forward, color: Colors.white),
             ),
-          ),
-
-          // Map loading indicator
-          Opacity(
-            opacity: _isMapLoading ? 1 : 0,
-            child: Center(child: CircularProgressIndicator()),
-          ),
-
-          // Map markers loading indicator
-          if (_areMarkersLoading)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Card(
-                  elevation: 2,
-                  color: Colors.grey.withOpacity(0.9),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Text(
-                      'Loading',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-        ],
+          )
+        )
+       ]
       ),
     );
+  }
+
+  void mapCreated(controller){
+    setState(() {
+      controller = controller;
+    });
+  }
+
+  movetoAtlanta(){
+    _controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(33.7490, -84.3880), zoom: 12.0),
+    ));
   }
 
     
