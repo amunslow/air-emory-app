@@ -5,7 +5,7 @@ class PMAvg extends StatelessWidget {
   final double total;
   final int numEntries;
   
-  PMAvg({this.avg, this.total, this.numEntries});
+  PMAvg(this.avg, this.total, this.numEntries);
 
   @override
   Widget build(BuildContext context) {
