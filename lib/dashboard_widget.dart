@@ -7,7 +7,9 @@ class Dashboard extends StatefulWidget {
   final int aqi;
   final ResponseWidget lastEntry;
   final LineChartSample2 lineChart;
-  Dashboard({Key key, @required this.aqi, @required this.lastEntry, @required this.lineChart}) : super(key: key);
+  final String aqiDescriptionText;
+  final String timestampNow;
+  Dashboard({Key key, @required this.timestampNow, @required this.aqi, @required this.aqiDescriptionText, @required this.lastEntry, @required this.lineChart}) : super(key: key);
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -50,7 +52,7 @@ class _DashboardState extends State<Dashboard> {
                     style: TextStyle(
                     color: Colors.white,
                     fontSize:20.0,
-                )))),
+                )))),           
               Container(
                 width: MediaQuery.of(context).size.width,
                 color: Colors.yellow,
@@ -125,6 +127,44 @@ class _DashboardState extends State<Dashboard> {
   ));
   }
 
+  Material aqiDescriptionTile() {
+    return Material(
+      animationDuration: kThemeChangeDuration,
+      color: Colors.white,
+      elevation: 14.0,
+      shadowColor: Color(0x802196F3),
+      borderRadius: BorderRadius.circular(12.0),
+      child:Center(
+        child: Padding(
+          padding:const EdgeInsets.all(0.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'AQI Level',
+                  style: TextStyle(
+                    color: Colors.blueGrey,
+                    fontSize:18.0,
+                    fontWeight: FontWeight.bold,
+                  )
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+                  child: Text(widget.aqiDescriptionText,
+                  style: TextStyle(
+                  color: Colors.blue,
+                  fontSize:50.0,
+                )))
+              ]
+            )
+          ],
+        ))
+    ));
+  }
+
   Material aqiTile(int aqi) {
   return Material(
     animationDuration: kThemeChangeDuration,
@@ -154,7 +194,7 @@ class _DashboardState extends State<Dashboard> {
                 child: Text(aqi.toString(),
                 style: TextStyle(
                 color: Colors.blue,
-                fontSize:35.0,
+                fontSize:50.0,
               )))
             ]
           )
@@ -169,6 +209,13 @@ class _DashboardState extends State<Dashboard> {
 String parseValue(String value, String field) {
   double val = double.tryParse(value);
   if (val == null) { 
+    if (field == "pmfine") {
+      return 'PM\u2082\u002e\u2085: No Data';
+   } else if (field == "temp") {
+      return 'Temperature: No Data';
+    } else if (field == "rh") {
+      return 'Relative Humidity: No Data';
+    }
   } else {
     if (field == "pmfine") {
       return 'PM\u2082\u002e\u2085: ' + val.toStringAsFixed(2) + '\u03BCg/m\u00B3';
@@ -178,7 +225,7 @@ String parseValue(String value, String field) {
       return 'Relative Humidity: ' + val.toStringAsFixed(2) + '%';
     }
   }
-  return "No data";
+  return 'No Data';
 }
 
 Material lastEntryTile(ResponseWidget lastEntry) {
@@ -254,23 +301,27 @@ Material lastEntryTile(ResponseWidget lastEntry) {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Air Quality Report')),
+      /*appBar: AppBar(title: Text('Air Quality Report')),*/
       body: StaggeredGridView.count(
               crossAxisCount: 2,
               crossAxisSpacing: 12.0,
               mainAxisSpacing: 12.0,
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               children: <Widget>[
+                Text('Air Quality Report', textAlign: TextAlign.center, style: TextStyle(fontSize: 28, color: Colors.blue, fontWeight: FontWeight.bold)),
+                Text('generated at ' + widget.timestampNow + ' EST', textAlign: TextAlign.center, style: TextStyle(fontSize: 15, color: Colors.blue)),
                 aqiTile(widget.aqi), //aqi 
                 aqiValuesTile(), //aqi indicator
-                aqiTile(3), //aqi tips
+                aqiDescriptionTile(), //aqi tips
                 lastEntryTile(widget.lastEntry), //last data entry
                 aqiTile(5), //daily averages
                 pmChartTile(widget.lineChart), //pm2.5 line chart
               ],
               staggeredTiles: [
-                StaggeredTile.extent(1, 230.0),
-                StaggeredTile.extent(1, 230.0),
+                StaggeredTile.extent(2, 30.0),
+                StaggeredTile.extent(2, 20.0),
+                StaggeredTile.extent(1, 240.0),
+                StaggeredTile.extent(1, 240.0),
                 StaggeredTile.extent(2, 240.0),
                 StaggeredTile.extent(2, 130.0),
                 StaggeredTile.extent(2, 130.0),
