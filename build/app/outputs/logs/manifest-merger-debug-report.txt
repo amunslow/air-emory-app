@@ -5,8 +5,11 @@ INJECTED from /Users/annamunslow/repos/air-emory-app/air-emory-app/android/app/s
 INJECTED from /Users/annamunslow/repos/air-emory-app/air-emory-app/android/app/src/main/AndroidManifest.xml:1:1-35:12
 INJECTED from /Users/annamunslow/repos/air-emory-app/air-emory-app/android/app/src/main/AndroidManifest.xml:1:1-35:12
 MERGED from /Users/annamunslow/repos/air-emory-app/air-emory-app/android/app/src/main/AndroidManifest.xml:1:1-35:12
+MERGED from [:path_provider] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/path_provider/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:path_provider_macos] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/path_provider_macos/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:google_maps_flutter] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/google_maps_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_plugin_android_lifecycle] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:sqflite] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/sqflite/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/annamunslow/.gradle/caches/transforms-2/files-2.1/6b9b7fc1ad481537ed0a66d62976ec46/play-services-maps-17.0.0/AndroidManifest.xml:17:1-38:12
 MERGED from [com.google.android.gms:play-services-base:17.0.0] /Users/annamunslow/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:17:1-29:12
 MERGED from [com.google.android.gms:play-services-tasks:17.0.0] /Users/annamunslow/.gradle/caches/transforms-2/files-2.1/10631bb3012ccad9c5c9285264903a3d/play-services-tasks-17.0.0/AndroidManifest.xml:2:1-9:12
@@ -113,10 +116,16 @@ uses-sdk
 INJECTED from /Users/annamunslow/repos/air-emory-app/air-emory-app/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/annamunslow/repos/air-emory-app/air-emory-app/android/app/src/main/AndroidManifest.xml
 INJECTED from /Users/annamunslow/repos/air-emory-app/air-emory-app/android/app/src/main/AndroidManifest.xml
+MERGED from [:path_provider] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/path_provider/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:path_provider] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/path_provider/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_macos] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/path_provider_macos/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_macos] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/path_provider_macos/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:google_maps_flutter] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/google_maps_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:google_maps_flutter] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/google_maps_flutter/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:sqflite] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/sqflite/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:sqflite] /Users/annamunslow/repos/air-emory-app/air-emory-app/build/sqflite/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/annamunslow/.gradle/caches/transforms-2/files-2.1/6b9b7fc1ad481537ed0a66d62976ec46/play-services-maps-17.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-maps:17.0.0] /Users/annamunslow/.gradle/caches/transforms-2/files-2.1/6b9b7fc1ad481537ed0a66d62976ec46/play-services-maps-17.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-base:17.0.0] /Users/annamunslow/.gradle/caches/transforms-2/files-2.1/5ac9ad6f13ea0190a3570ea7a43d9f59/play-services-base-17.0.0/AndroidManifest.xml:20:5-44

@@ -20,13 +20,8 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.12.0+4
-<<<<<<< HEAD
-  intl: ^0.16.1
-  instant: ^0.3.2
   fl_chart: ^0.8.5
   flutter_staggered_grid_view: ^0.3.0
-=======
->>>>>>> master
 
   google_maps_flutter: any
 

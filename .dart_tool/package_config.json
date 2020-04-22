@@ -56,17 +56,16 @@
       "languageVersion": "2.0"
     },
     {
-<<<<<<< HEAD
       "name": "fl_chart",
       "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/fl_chart-0.8.7",
       "packageUri": "lib/",
       "languageVersion": "2.1"
-=======
+    },
+    {
       "name": "fluster",
       "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/fluster-1.1.2",
       "packageUri": "lib/",
       "languageVersion": "2.4"
->>>>>>> master
     },
     {
       "name": "flutter",
@@ -149,10 +148,20 @@
     {
       "name": "path",
       "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.6.4",
-<<<<<<< HEAD
-=======
       "packageUri": "lib/",
       "languageVersion": "2.0"
+    },
+    {
+      "name": "path_drawing",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/path_drawing-0.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "1.19"
+    },
+    {
+      "name": "path_parsing",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/path_parsing-0.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "1.19"
     },
     {
       "name": "path_provider",
@@ -169,21 +178,8 @@
     {
       "name": "path_provider_platform_interface",
       "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_platform_interface-1.0.1",
->>>>>>> master
       "packageUri": "lib/",
       "languageVersion": "2.0"
-    },
-    {
-      "name": "path_drawing",
-      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/path_drawing-0.4.1",
-      "packageUri": "lib/",
-      "languageVersion": "1.19"
-    },
-    {
-      "name": "path_parsing",
-      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/path_parsing-0.1.4",
-      "packageUri": "lib/",
-      "languageVersion": "1.19"
     },
     {
       "name": "pedantic",
@@ -278,15 +274,12 @@
     {
       "name": "typed_data",
       "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.1.6",
-<<<<<<< HEAD
-=======
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
     {
       "name": "uuid",
       "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/uuid-2.0.4",
->>>>>>> master
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -309,11 +302,7 @@
       "languageVersion": "2.2"
     }
   ],
-<<<<<<< HEAD
-  "generated": "2020-04-22T03:18:56.119658Z",
-=======
-  "generated": "2020-04-22T03:13:40.366117Z",
->>>>>>> master
+  "generated": "2020-04-22T03:30:56.226356Z",
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }
