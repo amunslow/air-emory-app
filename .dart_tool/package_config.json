@@ -56,16 +56,29 @@
       "languageVersion": "2.0"
     },
     {
+<<<<<<< HEAD
       "name": "fl_chart",
       "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/fl_chart-0.8.7",
       "packageUri": "lib/",
       "languageVersion": "2.1"
+=======
+      "name": "fluster",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/fluster-1.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.4"
+>>>>>>> master
     },
     {
       "name": "flutter",
       "rootUri": "file:///Users/annamunslow/development/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "2.2"
+    },
+    {
+      "name": "flutter_cache_manager",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_cache_manager-1.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
     },
     {
       "name": "flutter_plugin_android_lifecycle",
@@ -136,6 +149,27 @@
     {
       "name": "path",
       "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/path-1.6.4",
+<<<<<<< HEAD
+=======
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "path_provider",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "path_provider_macos",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
+      "name": "path_provider_platform_interface",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_platform_interface-1.0.1",
+>>>>>>> master
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -164,6 +198,18 @@
       "languageVersion": "2.4"
     },
     {
+      "name": "platform",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/platform-2.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "1.24"
+    },
+    {
+      "name": "plugin_platform_interface",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "quiver",
       "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/quiver-2.0.5",
       "packageUri": "lib/",
@@ -180,6 +226,18 @@
       "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.5.5",
       "packageUri": "lib/",
       "languageVersion": "1.8"
+    },
+    {
+      "name": "sqflite",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-1.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
+    },
+    {
+      "name": "sqflite_common",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite_common-1.0.0+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
     },
     {
       "name": "stack_trace",
@@ -200,6 +258,12 @@
       "languageVersion": "2.0"
     },
     {
+      "name": "synchronized",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/synchronized-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
       "name": "term_glyph",
       "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.1.0",
       "packageUri": "lib/",
@@ -214,6 +278,15 @@
     {
       "name": "typed_data",
       "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/typed_data-1.1.6",
+<<<<<<< HEAD
+=======
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "uuid",
+      "rootUri": "file:///Users/annamunslow/development/flutter/.pub-cache/hosted/pub.dartlang.org/uuid-2.0.4",
+>>>>>>> master
       "packageUri": "lib/",
       "languageVersion": "2.0"
     },
@@ -233,10 +306,14 @@
       "name": "airemory",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "2.1"
+      "languageVersion": "2.2"
     }
   ],
+<<<<<<< HEAD
   "generated": "2020-04-22T03:18:56.119658Z",
+=======
+  "generated": "2020-04-22T03:13:40.366117Z",
+>>>>>>> master
   "generator": "pub",
   "generatorVersion": "2.7.0"
 }
