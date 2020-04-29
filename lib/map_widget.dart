@@ -1,9 +1,36 @@
-import 'package:airemory/marker_model.dart';
+import 'package:airemory/report_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:async';
+
 
 //import 'helpers/map_helper.dart';
 //import 'helpers/map_marker.dart';
+
+class PinData {
+  String pinPath; //path to pin image 
+  String avatarPath; //path to image for the pin location 
+  String locationName;
+  String pmStats;
+  String description;
+  DateTime timeStamp;
+  LatLng locationCoords;
+  Color labelColor;
+
+
+  PinData(
+      {
+      this.pinPath,
+      this.avatarPath,
+      this.locationName,
+      this.pmStats,
+      this.description,
+      this.timeStamp,
+      this.locationCoords,
+      this.labelColor
+      });
+}
 
 
 
@@ -15,219 +42,262 @@ class MapWidget extends StatefulWidget {
 }
 
 class _MapState extends State<MapWidget> {
-
+GoogleMapController _controller;
+ Future<List<Post>> post;
  List<Marker> allMarkers = [];
 
- GoogleMapController _controller;
+ 
+ BitmapDescriptor _sourceIcon;
+ //BitmapDescriptor _yellowIcon;
+ //BitmapDescriptor _sourceIcon;
+
+
+Widget _child = Center(
+  child: Text('Loading...'),
+);
+
+ Position position;
+ double _pinPillPosition = -1000;
+
+ PinData _currentPinData = PinData(
+   pinPath: '',
+   avatarPath: '',
+   locationName: '',
+   pmStats: '',
+   description: '',
+   timeStamp: DateTime.now(),
+   locationCoords: LatLng(0, 0),
+   labelColor: Colors.grey
+ );
+
+ PinData _sourcePinInfo;
+
+void _setSourceIcon() async {
+  _sourceIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/pin.png');
+}
+
+void _getCurrentLocation() async {
+    setState(() {
+      _child = _mapWidget();
+    });
+  }
+
+String _getStatus(String value){
+    int aqii;
+    try {
+      aqii = int.parse(value);
+    print(aqii);
+    } on FormatException {
+      return 'Format error!';
+    }
+
+    if (aqii>301){
+      return 'Hazardous Level';
+    }
+    else if (aqii>251){
+      return 'Very Unhealthy Level';
+    }
+    else if (aqii > 151){
+      return 'Unhealthy Level';
+    }
+    else if(aqii > 101){
+      return 'Unhealthy For Sensitive Groups Level';
+    }
+    else if (aqii > 51){
+      return 'Moderate Level';
+    }
+    else{
+      return 'Good Level';
+    }
+     
+  }
+
+/*
+String _getPin(String value){
+    int aqii;
+    try {
+      aqii = int.parse(value);
+    print(aqii);
+    } on FormatException {
+      return 'Format error!';
+    }
+
+    if (aqii>301){
+      return "assets/maroon.png";
+    }
+    else if (aqii>251){
+      return "assets/purple.png";
+    }
+    else if (aqii > 151){
+      return "assets/red.png";
+    }
+    else if(aqii > 101){
+      return "assets/orange.png";
+    }
+    else if (aqii > 51){
+      return "assets/yellow.png";
+    }
+    else{
+      return "assets/green.png";
+    }
+     
+  }
+*/
+Set<Marker> _createMarker() {
+    return <Marker>[
+      Marker(
+          markerId: MarkerId('home'),
+          position: LatLng(33.7902108,-84.3287008),
+          icon: _sourceIcon,
+          onTap: () {
+            setState(() {
+              _currentPinData = _sourcePinInfo;
+              _pinPillPosition = 0;
+            });
+          })
+    ].toSet();
+  }
+
 
   @override
   void initState() {
+    _getCurrentLocation();
+    _setSourceIcon();
     super.initState();
-    sensorList.forEach((element) {
-      allMarkers.add(Marker(
-          markerId: MarkerId(element.locationName),
-          draggable: false,
-          onTap: () {
-          print('Marker Tapped');
-        },
-          infoWindow:
-              InfoWindow(title: element.locationName, snippet: element.description),
-    
-          position: element.locationCoords));
-    });
-    
   }
 
-
-
-  
-/*
-  final Completer<GoogleMapController> _mapController = Completer();
-
-  /// Set of displayed markers and cluster markers on the map
-  final Set<Marker> _markers = Set();
-
-  /// Minimum zoom at which the markers will cluster
-  final int _minClusterZoom = 0;
-
-  /// Maximum zoom at which the markers will cluster
-  final int _maxClusterZoom = 19;
-
-  /// [Fluster] instance used to manage the clusters
-  Fluster<MapMarker> _clusterManager;
-
-  /// Current map zoom. Initial zoom will be 15, street level
-  double _currentZoom = 15;
-
-  /// Map loading flag
-  bool _isMapLoading = true;
-
-  /// Markers loading flag
-  bool _areMarkersLoading = true;
-
-  /// Url image used on normal markers
-  final String _markerImageUrl =
-      'https://img.icons8.com/office/80/000000/marker.png';
-
-  /// Color of the cluster circle
-  final Color _clusterColor = Colors.blue;
-
-  /// Color of the cluster text
-  final Color _clusterTextColor = Colors.white;
-
-  /// Example marker coordinates
-  final List<LatLng> _markerLocations = [
-    LatLng(41.147125, -8.611249),
-    LatLng(41.145599, -8.610691),
-    LatLng(41.145645, -8.614761),
-    LatLng(41.146775, -8.614913),
-    LatLng(41.146982, -8.615682),
-    LatLng(41.140558, -8.611530),
-    LatLng(41.138393, -8.608642),
-    LatLng(41.137860, -8.609211),
-    LatLng(41.138344, -8.611236),
-    LatLng(41.139813, -8.609381),
-  ];
-
-
-
-
-
-  /// Called when the Google Map widget is created. Updates the map loading state
-  /// and inits the markers.
-  void _onMapCreated(GoogleMapController controller) {
-    _mapController.complete(controller);
-
-    setState(() {
-      _isMapLoading = false;
-    });
-
-    _initMarkers();
-  }
- 
-  /// Inits [Fluster] and all the markers with network images and updates the loading state.
-  void _initMarkers() async {
-    final List<MapMarker> markers = [];
-
-    for (LatLng markerLocation in _markerLocations) {
-      final BitmapDescriptor markerImage =
-          await MapHelper.getMarkerImageFromUrl(_markerImageUrl);
-
-      markers.add(
-        MapMarker(
-          id: _markerLocations.indexOf(markerLocation).toString(),
-          position: markerLocation,
-          infoWindow: InfoWindow(
-                title: 'PlatformMarker',
-                snippet: "Hi I'm a Platform Marker",
-              ),
-          icon: markerImage,
-          onPressed:(){
-            showModalBottomSheet(
-              context: context, 
-              builder: (builder){
-              return Container(
-                color: Colors.white,
-                child: Text("Hello there"),
-            );
-          });
-         },
-        ),
-      );
-
-     
-      
-
-    }
-
-    _clusterManager = await MapHelper.initClusterManager(
-      markers,
-      _minClusterZoom,
-      _maxClusterZoom,
+  Widget _mapWidget() {
+    return GoogleMap(
+      mapType: MapType.normal,
+      markers: _createMarker(),
+      initialCameraPosition: CameraPosition(
+          target: LatLng(33.7902108,-84.3287008), zoom: 12.0),
+      onMapCreated: (GoogleMapController controller) {
+        _controller = controller;
+        _setMapPins();
+      },
+      tiltGesturesEnabled: false,
+      onTap: (LatLng location) {
+        setState(() {
+          _pinPillPosition = -1000;
+        });
+      },
     );
-
-    await _updateMarkers();
   }
 
-  /// Gets the markers and clusters to be displayed on the map for the current zoom level and
-  /// updates state.
-  Future<void> _updateMarkers([double updatedZoom]) async {
-    if (_clusterManager == null || updatedZoom == _currentZoom) return;
 
-    if (updatedZoom != null) {
-      _currentZoom = updatedZoom;
-    }
+   
 
-    setState(() {
-      _areMarkersLoading = true;
-    });
-
-    final updatedMarkers = await MapHelper.getClusterMarkers(
-      _clusterManager,
-      _currentZoom,
-      _clusterColor,
-      _clusterTextColor,
-      80,
-    );
-
-    _markers
-      ..clear()
-      ..addAll(updatedMarkers);
-
-    setState(() {
-      _areMarkersLoading = false;
-    });
+  void _setMapPins() {
+    _sourcePinInfo = PinData(
+        pinPath: 'assets/pin.png',
+        pmStats: '15',
+        description:
+          'Coffee bar chain offering house-roasted direct-trade coffee, along with brewing gear & whole beans',
+        locationName: "MSC",
+        timeStamp: DateTime.now(), 
+        locationCoords: LatLng(33.7902108,-84.3287008),
+        avatarPath: "assets/flower.jpeg",
+        labelColor: Colors.blue);
   }
-
-  */ 
 
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Markers'),
-      ),
       body: Stack(
-       children: [Container(
-         height: MediaQuery.of(context).size.height,
-         width: MediaQuery.of(context).size.width,
-         child: GoogleMap(
-           initialCameraPosition: CameraPosition(target: LatLng(40.745803, -73.988213), zoom: 12.0),
-           markers: Set.from(allMarkers),
-           onMapCreated: mapCreated,
-         ),
-       ),
-       Align(
-         alignment: Alignment.bottomCenter,
-          child: InkWell(
-            onTap: movetoAtlanta,
-            child: Container(
-              height:40.0, 
-              width: 40.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.0),
-                color: Colors.green
-              ),
-              child: Icon(Icons.forward, color: Colors.white),
-            ),
+        children: <Widget>[
+          _child,
+          AnimatedPositioned(
+            bottom: _pinPillPosition,
+            right: 0,
+            left: 0,
+            duration: Duration(milliseconds: 200),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                margin: EdgeInsets.all(20),
+                height: 250,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      blurRadius: 20,
+                      offset: Offset.zero,
+                      color: Colors.grey.withOpacity(0.5),
+                    )
+                  ]),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _buildAvatar(),
+                    _buildLocationInfo(),
+                    _buildMarkerType()
+                  ]
+                )
+              )
+            )
           )
-        )
-       ]
+        ],
+      )
+    );
+  }
+
+  Widget _buildAvatar() {
+    return Container(
+      margin: EdgeInsets.only(left: 10),
+      width: 100,
+      height: 100,
+      child: ClipOval(
+        child: Image.asset(
+          _currentPinData.avatarPath,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
 
-  void mapCreated(controller){
-    setState(() {
-      controller = controller;
-    });
+  Widget _buildMarkerType() {
+    return Padding(
+      padding: EdgeInsets.all(15),
+      child: Image.asset(
+        _currentPinData.pinPath,
+        width: 60,
+        height: 60,
+      ),
+    );
   }
+//container that displays lat and long info
+  Widget _buildLocationInfo() {
+    return Expanded(
+      child: Container(
+        margin: EdgeInsets.only(left: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              _currentPinData.locationName,
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0),
+            ),
+            Text(
+              'AQI : ${_currentPinData.pmStats}',
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),
+            ),
+            Text(
+              _getStatus(_currentPinData.pmStats),
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),
+            )
+            
+          ],
 
-  movetoAtlanta(){
-    _controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(33.7490, -84.3880), zoom: 12.0),
-    ));
+        ),
+      ),
+    );
   }
 
     

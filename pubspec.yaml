@@ -25,6 +25,11 @@ dependencies:
 
   google_maps_flutter: any
 
+  geolocator: ^5.1.5
+
+  permission_handler: ^3.0.1
+  fluttertoast: ^3.1.3
+
   fluster: any
   meta: any
   flutter_cache_manager: any
@@ -50,6 +55,10 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - assets/flower.jpeg
+    - assets/pin.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

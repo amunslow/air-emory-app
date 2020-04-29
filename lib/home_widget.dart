@@ -13,8 +13,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final List<Widget> _children = [ // list of our final widgets (pages)
-   ReportWidget(),
    MapWidget(),
+   ReportWidget(),
    PlaceholderWidget(Colors.green)
  ];
 
@@ -31,12 +31,12 @@ class _HomeState extends State<Home> {
        currentIndex: _currentIndex,
        items: [
          BottomNavigationBarItem(
-           icon: new Icon(Icons.library_books),
-           title: new Text('Report'),
-         ),
-         BottomNavigationBarItem(
            icon: new Icon(Icons.map),
            title: new Text('Map'),
+         ),
+         BottomNavigationBarItem(
+           icon: new Icon(Icons.library_books),
+           title: new Text('Report'),
          ),
          BottomNavigationBarItem(
            icon: Icon(Icons.question_answer),
