@@ -1,4 +1,3 @@
-import 'package:airemory/marker_model.dart';
 import 'package:airemory/report_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -114,6 +113,7 @@ String _getStatus(String value){
      
   }
 
+/*
 String _getPin(String value){
     int aqii;
     try {
@@ -143,7 +143,7 @@ String _getPin(String value){
     }
      
   }
-
+*/
 Set<Marker> _createMarker() {
     return <Marker>[
       Marker(
