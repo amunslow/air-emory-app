@@ -42,7 +42,7 @@ class MapWidget extends StatefulWidget {
 }
 
 class _MapState extends State<MapWidget> {
-GoogleMapController _controller;
+ GoogleMapController _controller;
  Future<List<Post>> post;
  List<Marker> allMarkers = [];
 
@@ -70,7 +70,10 @@ Widget _child = Center(
    labelColor: Colors.grey
  );
 
- PinData _sourcePinInfo;
+//initializing the pin class that goes with each marker 
+//used for the info window details 
+ PinData _firstPinInfo;
+ PinData _secondPinInfo;
 
 void _setSourceIcon() async {
   _sourceIcon = await BitmapDescriptor.fromAssetImage(
@@ -144,6 +147,11 @@ String _getPin(String value){
      
   }
 */
+//the markers for each sensor 
+/*
+when the markers are touched(onTap()), it populates currentpindata with the pin
+that is associated with that marker 
+*/
 Set<Marker> _createMarker() {
     return <Marker>[
       Marker(
@@ -152,7 +160,17 @@ Set<Marker> _createMarker() {
           icon: _sourceIcon,
           onTap: () {
             setState(() {
-              _currentPinData = _sourcePinInfo;
+              _currentPinData = _firstPinInfo;
+              _pinPillPosition = 0;
+            });
+          }),
+      Marker(
+          markerId: MarkerId('not'),
+          position: LatLng(33.7902108,-84.4287008),
+          icon: _sourceIcon,
+          onTap: () {
+            setState(() {
+              _currentPinData = _secondPinInfo;
               _pinPillPosition = 0;
             });
           })
@@ -188,9 +206,10 @@ Set<Marker> _createMarker() {
 
 
    
-
+// populating the pin info that we need for each marker on the info window (only)
+// we will need to update this to take the aqi
   void _setMapPins() {
-    _sourcePinInfo = PinData(
+    _firstPinInfo = PinData(
         pinPath: 'assets/pin.png',
         pmStats: '15',
         description:
@@ -200,6 +219,18 @@ Set<Marker> _createMarker() {
         locationCoords: LatLng(33.7902108,-84.3287008),
         avatarPath: "assets/flower.jpeg",
         labelColor: Colors.blue);
+
+    _secondPinInfo = PinData(
+        pinPath: 'assets/pin.png',
+        pmStats: '13',
+        description:
+          'Coffee bar chain offering house-roasted direct-trade coffee, along with brewing gear & whole beans',
+        locationName: "Other",
+        timeStamp: DateTime.now(), 
+        locationCoords: LatLng(33.7902108,-84.4287008),
+        avatarPath: "assets/flower.jpeg",
+        labelColor: Colors.blue);
+      
   }
 
 
