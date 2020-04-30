@@ -224,7 +224,7 @@ int getAqi(int currAndYestData, List<Entry> currList, List<Entry> yestList, Stri
   int power, aqi;
   sum = 0.0;
   denomSum = 0.0;
-  if (currAndYestData == 0) {
+  if (currAndYestData == 1) {
     totpm = getTotalPm(currList, timestampNow, timestampYest);
     range = totpm.max - totpm.min;
     scaledRateOfChange = range / totpm.max;
