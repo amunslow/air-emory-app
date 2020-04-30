@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "817617147787",
+    "firebase_url": "https://halogen-welder-200220.firebaseio.com",
+    "project_id": "halogen-welder-200220",
+    "storage_bucket": "halogen-welder-200220.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:817617147787:android:bbb52bd4bc4d1f0400018e",
+        "android_client_info": {
+          "package_name": "com.airemory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "817617147787-ecmpt4gd855bhpletarieolqrdp1f9sk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgpnXcW2w1dE6qLBIUp_epu7qW3FWIEPo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "817617147787-ecmpt4gd855bhpletarieolqrdp1f9sk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "817617147787-47p306aqilegtuqldn5rqks9dqvkq9bc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.airemory"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
