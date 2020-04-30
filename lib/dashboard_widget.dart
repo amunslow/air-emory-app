@@ -6,10 +6,11 @@ import 'lineChart_widget.dart';
 class Dashboard extends StatefulWidget {
   final int aqi;
   final ResponseWidget lastEntry;
+  final ResponseWidget dailyAvg;
   final LineChartSample2 lineChart;
   final String aqiDescriptionText;
   final String timestampNow;
-  Dashboard({Key key, @required this.timestampNow, @required this.aqi, @required this.aqiDescriptionText, @required this.lastEntry, @required this.lineChart}) : super(key: key);
+  Dashboard({Key key, @required this.timestampNow, @required this.aqi, @required this.aqiDescriptionText, @required this.lastEntry, @required this.dailyAvg, @required this.lineChart}) : super(key: key);
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -286,6 +287,56 @@ Material lastEntryTile(ResponseWidget lastEntry) {
   ));
 }
 
+Material dailyAvgTile(ResponseWidget dailyAvg) {
+  return Material(
+    color: Colors.white,
+    elevation: 14.0,
+    shadowColor: Color(0x802196F3),
+    borderRadius: BorderRadius.circular(12.0),
+      child: Padding(
+        padding:const EdgeInsets.all(8.0),
+      child: Row(mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Text('Today\'s Averages',
+              textAlign: TextAlign.center,
+                style: 
+                  TextStyle(
+                    color: Colors.blueGrey,
+                    fontSize:18.0,
+                    fontWeight: FontWeight.bold,
+                  )
+              ),
+              Text(
+                parseValue(dailyAvg.pmfine, "pmfine"),
+                textAlign: TextAlign.left,
+                style:TextStyle(
+                  color: Colors.blue,
+                  fontSize:15.0,
+                )),
+              Text(
+                parseValue(dailyAvg.temperature, "temp"),
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize:15.0
+                )
+              ),
+              Text(
+                parseValue(dailyAvg.humidity, "rh"),
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize:15.0
+                )
+              ),
+            ]
+          )
+        ])
+  ));
+}
+
   Material pmChartTile(LineChartSample2 lineChart) {
   return Material(
     color: Colors.white,
@@ -314,7 +365,7 @@ Material lastEntryTile(ResponseWidget lastEntry) {
                 aqiValuesTile(), //aqi indicator
                 aqiDescriptionTile(), //aqi tips
                 lastEntryTile(widget.lastEntry), //last data entry
-                aqiTile(5), //daily averages
+                dailyAvgTile(widget.dailyAvg), //daily averages
                 pmChartTile(widget.lineChart), //pm2.5 line chart
               ],
               staggeredTiles: [

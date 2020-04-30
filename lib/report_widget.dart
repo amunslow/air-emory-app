@@ -97,6 +97,7 @@ class _ReportState extends State<ReportWidget> {
   ResponseWidget lastent; //last data entry for today
   int aqi; //the aqi based on the last 12 hours of data
   int thereIsData = 0; //0 or 1, to tell if there is data for the current day
+  ResponseWidget dailyavg; //daily averages for today
 
   // Function to get the last data entry and its list index
 ResponseWidget lastEntry(List<Entry> entryList, String timestamp) {
@@ -110,7 +111,51 @@ ResponseWidget lastEntry(List<Entry> entryList, String timestamp) {
   return ResponseWidget('No Data', 'No Data', 'No Data', 'No Data');
 }
 
-// Function to tell if the sheet contains current day and yesterday data
+// Function to get the daily averages 
+ResponseWidget dailyAverages(List<Entry> entryList, String timestamp) {
+  double temperatureTot = 0.0;
+  double humidityTot = 0.0;
+  double pmfineTot = 0.0;
+  int temperatureNumEntries = 0;
+  int humidityNumEntries = 0;
+  int pmfineNumEntries = 0;
+  double temperatureAvg = 0.0;
+  double humidityAvg = 0.0;
+  double pmfineAvg = 0.0;
+
+  for (int i = 0; i < entryList.length; i++) {
+    if (timestamp.substring(0,10) == entryList[i].timestamp.t.substring(0,10)) { 
+      if (entryList[i].temperature.t != "") {
+        temperatureTot += double.parse(entryList[i].temperature.t);
+        temperatureNumEntries++;
+      }
+      if (entryList[i].humidity.t != "") {
+        humidityTot += double.parse(entryList[i].humidity.t);
+        humidityNumEntries++;       
+      }
+      if (entryList[i].pmfine.t != "") {
+        pmfineTot += double.parse(entryList[i].pmfine.t);
+        pmfineNumEntries++;
+      }
+    }
+  }
+
+    if (temperatureNumEntries != 0) {
+      temperatureAvg = temperatureTot / temperatureNumEntries;
+    }
+
+    if (humidityNumEntries != 0) {
+      humidityAvg = humidityTot / humidityNumEntries;
+    }
+
+    if (pmfineNumEntries != 0) {
+      pmfineAvg = pmfineTot / pmfineNumEntries;
+    }
+    
+    return ResponseWidget("", temperatureAvg.toString(), humidityAvg.toString(), pmfineAvg.toString());
+}
+
+// Function to tell if the sheet contains data from current day and yesterday
 int currAndYestData(List<Entry> entryList, String currTime, String yestTime) {
   int curr = 0;
   int yest = 0;
@@ -224,7 +269,7 @@ int getAqi(int currAndYestData, List<Entry> currList, List<Entry> yestList, Stri
   int power, aqi;
   sum = 0.0;
   denomSum = 0.0;
-  if (currAndYestData == 0) {
+  if (currAndYestData == 1) {
     totpm = getTotalPm(currList, timestampNow, timestampYest);
     range = totpm.max - totpm.min;
     scaledRateOfChange = range / totpm.max;
@@ -311,11 +356,12 @@ String getAqiLevel(int aqi) {
                             Text('No Data', textAlign: TextAlign.center, style: TextStyle(fontSize: 25))
                       ],);
                       } else {
+                        dailyavg = dailyAverages(curr.feed.entries, timestampNow);
                         int cydata = currAndYestData(curr.feed.entries, timestampNow, timestampYest);
                         aqi = getAqi(cydata, curr.feed.entries, yest.feed.entries, timestampNow, timestamp12Hr);
                         String aqiDescriptionText = getAqiLevel(aqi);
                         LineChartSample2 lineChart = LineChartSample2(entries:curr.feed.entries);
-                        return Dashboard(timestampNow: timestampNow, aqi:aqi, aqiDescriptionText: aqiDescriptionText, lastEntry: lastent, lineChart: lineChart);
+                        return Dashboard(timestampNow: timestampNow, aqi:aqi, aqiDescriptionText: aqiDescriptionText, lastEntry: lastent, dailyAvg: dailyavg, lineChart: lineChart);
                       }
               } else if (snapshot.hasError) {
                   return Text("${snapshot.error}");
