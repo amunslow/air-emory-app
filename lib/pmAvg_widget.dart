@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class PMAvg extends StatelessWidget {
-  final double avg;
-  final double total;
-  final int numEntries;
+  double avg;
+  double total;
+  int numEntries;
   
   PMAvg(this.avg, this.total, this.numEntries);
 
