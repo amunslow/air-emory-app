@@ -606,7 +606,7 @@ Set<Marker> _createMarker() {
             Navigator.push(context, MaterialPageRoute(
               builder: (BuildContext context) {
                 return Scaffold(
-                  appBar: AppBar(title: Text('Math and Science Center Roof')),
+                  /*appBar: AppBar(title: Text('Math and Science Center Roof')),*/
                   body: Stack(
                       children: <Widget>[
                         ReportWidget(),   
