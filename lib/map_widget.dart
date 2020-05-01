@@ -465,6 +465,21 @@ Set<Marker> _createMarker() {
     
         
     return Scaffold(
+      appBar: AppBar(
+       title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                  Image.asset(
+                 'assets/cloud.png',
+                  fit: BoxFit.contain,
+                  height: 32,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(8.0), child: Text('Air Emory'))
+            ],
+
+          ),
+     ),
       body: Container(
           child: FutureBuilder(
             future: post,

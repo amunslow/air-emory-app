@@ -141,7 +141,8 @@ class _DashboardState extends State<Dashboard> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Column(
+            Expanded(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
@@ -156,11 +157,21 @@ class _DashboardState extends State<Dashboard> {
                   padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
                   child: Text(widget.aqiDescriptionText,
                   style: TextStyle(
-                  color: Colors.blue,
-                  fontSize:50.0,
-                )))
+                  color: aqiColor(widget.aqiDescriptionText),
+                  fontSize:40.0,
+                ))),
+                Container(
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+                  child: Text(aqiTips(widget.aqiDescriptionText),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize:15.0,
+                ))))
               ]
-            )
+            ))
           ],
         ))
     ));
@@ -227,6 +238,41 @@ String parseValue(String value, String field) {
     }
   }
   return 'No Data';
+}
+
+// Function to return health tips for the specific AQI level 
+// level = the aqi level (good, moderate, etc.)
+String aqiTips(String level) {
+  if (level == "Good") {
+    return "Exercise and play outside to your heart’s content! The air poses no risk today.";
+  } else if (level == "Moderate") {
+    return "For most people, the air poses no risk! Enjoy any outdoor activity! People who are very sensitive to ozone and other specific pollutants may want to avoid excessive outdoor activity to avoid respiratory symptoms.";
+  } else if (level == "Unhealthy for Sensitive Groups") {
+    return "For most people, the air poses no risk! Enjoy any outdoor activity! However, people with respiratory disease, heart disease, people with any other specific sensitivity, and children and adults who spend a lot of time outdoors should avoid going outside when it is unnecessary to do so.";
+  } else if (level == "Unhealthy") {
+    return "Everyone should limit outdoor activity today. Try to exercise or play inside! People with sensitivities, such as respiratory disease or heart disease, are likely to experience even worse symptoms and should take special care to limit their time outside.";
+  } else if (level == "Very Unhealthy") {
+    return "Everyone should avoid outdoor activity today. Do not exercise or play outside! Everyone is at risk to experience negative respiratory symptoms, and sensitive groups, such as those with respiratory or heart disease, should stay inside.";
+  } else {
+    return "This is considered emergency conditions. The entire population is likely to be negatively affected and everyone should stay inside as much as possible.";
+  }
+}
+
+// Function to change the color of the AQI level 
+Color aqiColor(String level) {
+  if (level == "Good") {
+    return Colors.green;
+  } else if (level == "Moderate") {
+    return Colors.yellow;
+  } else if (level == "Unhealthy for Sensitive Groups") {
+    return Colors.orange;
+  } else if (level == "Unhealthy") {
+    return Colors.red;
+  } else if (level == "Very Unhealthy") {
+    return Colors.purple;
+  } else {
+    return Color.fromRGBO(128, 0, 0, 1);
+  }
 }
 
 Material lastEntryTile(ResponseWidget lastEntry) {
