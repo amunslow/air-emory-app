@@ -103,9 +103,11 @@ class _ReportState extends State<ReportWidget> {
 ResponseWidget lastEntry(List<Entry> entryList, String timestamp) {
   int i;
   for (i = entryList.length-1; i >= 0; i--) {
-    if (timestamp.substring(0,10) == entryList[i].timestamp.t.substring(0,10)) {
-      thereIsData = 1;
-      return ResponseWidget(entryList[i].timestamp.t, entryList[i].temperature.t, entryList[i].humidity.t, entryList[i].pmfine.t);
+    if (timestamp != null) {
+      if (timestamp.substring(0,10) == entryList[i].timestamp.t.substring(0,10)) {
+        thereIsData = 1;
+        return ResponseWidget(entryList[i].timestamp.t, entryList[i].temperature.t, entryList[i].humidity.t, entryList[i].pmfine.t);
+      }
     }
   }
   return ResponseWidget('No Data', 'No Data', 'No Data', 'No Data');
@@ -124,18 +126,20 @@ ResponseWidget dailyAverages(List<Entry> entryList, String timestamp) {
   double pmfineAvg = 0.0;
 
   for (int i = 0; i < entryList.length; i++) {
-    if (timestamp.substring(0,10) == entryList[i].timestamp.t.substring(0,10)) { 
-      if (entryList[i].temperature.t != "") {
-        temperatureTot += double.parse(entryList[i].temperature.t);
-        temperatureNumEntries++;
-      }
-      if (entryList[i].humidity.t != "") {
-        humidityTot += double.parse(entryList[i].humidity.t);
-        humidityNumEntries++;       
-      }
-      if (entryList[i].pmfine.t != "") {
-        pmfineTot += double.parse(entryList[i].pmfine.t);
-        pmfineNumEntries++;
+    if (timestamp != null) {
+      if (timestamp.substring(0,10) == entryList[i].timestamp.t.substring(0,10)) { 
+        if (entryList[i].temperature.t != "") {
+          temperatureTot += double.parse(entryList[i].temperature.t);
+          temperatureNumEntries++;
+        }
+        if (entryList[i].humidity.t != "") {
+          humidityTot += double.parse(entryList[i].humidity.t);
+          humidityNumEntries++;       
+        }
+        if (entryList[i].pmfine.t != "") {
+          pmfineTot += double.parse(entryList[i].pmfine.t);
+          pmfineNumEntries++;
+        }
       }
     }
   }
@@ -160,8 +164,10 @@ int currAndYestData(List<Entry> entryList, String currTime, String yestTime) {
   int curr = 0;
   int yest = 0;
   for (int i = 0; i < entryList.length; i++) {
-    if (entryList[i].timestamp.t.substring(0,10) == currTime.substring(0,10)) curr = 1;
-    if (entryList[i].timestamp.t.substring(0,10) == yestTime.substring(0,10)) yest = 1;
+    if (entryList[i].timestamp.t != null) {
+      if (entryList[i].timestamp.t.substring(0,10) == currTime.substring(0,10)) curr = 1;
+      if (entryList[i].timestamp.t.substring(0,10) == yestTime.substring(0,10)) yest = 1;
+    }
   }
 
   if (curr == 1 && yest == 1) {
@@ -190,26 +196,28 @@ PMStats getTotalPm(List<Entry> entryList, String currTime, String timepast) {
   print('currdate: ' + currdate);
   print('hour 12: ' + hour12.toString());
   for (int i = entryList.length-1; i >= 0; i--) {
-    String entryTime = entryList[i].timestamp.t;
-    int entryhour = int.parse(entryTime.substring(11,13));
-    int entrymin = int.parse(entryTime.substring(14,16));
-    String entrydate = entryTime.substring(0,10);
-    if ((currdate != date12 && entrydate == date12 && entryhour >= hour12) || (currdate != date12 && entrydate == currdate && entryhour <= currhour) || (currdate == date12 && entrydate == currdate && entryhour >= hour12 && entryhour <= currhour)) {
-      if (hour12 == 0) {
-        index = entryhour;
-      } else {
-        index = entryhour % hour12;
-      } 
+    if (entryList[i].timestamp.t != null) {
+      String entryTime = entryList[i].timestamp.t;
+      int entryhour = int.parse(entryTime.substring(11,13));
+      int entrymin = int.parse(entryTime.substring(14,16));
+      String entrydate = entryTime.substring(0,10);
+      if ((currdate != date12 && entrydate == date12 && entryhour >= hour12) || (currdate != date12 && entrydate == currdate && entryhour <= currhour) || (currdate == date12 && entrydate == currdate && entryhour >= hour12 && entryhour <= currhour)) {
+        if (hour12 == 0) {
+          index = entryhour;
+        } else {
+          index = entryhour % hour12;
+        } 
 
-      //print('entryTime: ' + entryTime + ', index: ' + index.toString());
-      total[index].numEntries++;
-      total[index].total += double.parse(entryList[i].pmfine.t);
-      total[index].avg = total[index].numEntries / total[index].total;
-      if (double.parse(entryList[i].pmfine.t) > max) {
-        max = double.parse(entryList[i].pmfine.t);
-      } 
-      if (double.parse(entryList[i].pmfine.t) < min) {
-        min = double.parse(entryList[i].pmfine.t);
+        //print('entryTime: ' + entryTime + ', index: ' + index.toString());
+        total[index].numEntries++;
+        total[index].total += double.parse(entryList[i].pmfine.t);
+        total[index].avg = total[index].numEntries / total[index].total;
+        if (double.parse(entryList[i].pmfine.t) > max) {
+          max = double.parse(entryList[i].pmfine.t);
+        } 
+        if (double.parse(entryList[i].pmfine.t) < min) {
+          min = double.parse(entryList[i].pmfine.t);
+        }
       }
     }
   }
@@ -333,6 +341,7 @@ String getAqiLevel(int aqi) {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Math and Science Center Roof')),
         body: Container(
           child: FutureBuilder(
             future: post,
@@ -360,7 +369,7 @@ String getAqiLevel(int aqi) {
                         int cydata = currAndYestData(curr.feed.entries, timestampNow, timestampYest);
                         aqi = getAqi(cydata, curr.feed.entries, yest.feed.entries, timestampNow, timestamp12Hr);
                         String aqiDescriptionText = getAqiLevel(aqi);
-                        LineChartSample2 lineChart = LineChartSample2(entries:curr.feed.entries);
+                        LineChartSample2 lineChart = LineChartSample2(entries:curr.feed.entries, timestamp: timestampNow);
                         return Dashboard(timestampNow: timestampNow, aqi:aqi, aqiDescriptionText: aqiDescriptionText, lastEntry: lastent, dailyAvg: dailyavg, lineChart: lineChart);
                       }
               } else if (snapshot.hasError) {

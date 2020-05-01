@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
  Widget build(BuildContext context) {
    return Scaffold(
      
-     appBar: AppBar(
+    /* appBar: AppBar(
        title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
             ],
 
           ),
-     ),
+     ),*/
    
     body: _children[_currentIndex],
      bottomNavigationBar: BottomNavigationBar(

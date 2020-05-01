@@ -2,7 +2,23 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'report_widget.dart';
 
-//function to convert timestamp to number
+class LineChartSample2 extends StatefulWidget {
+  final List<Entry> entries;
+  final String timestamp;
+  LineChartSample2({Key key, @required this.entries, @required this.timestamp}) : super(key: key);
+  @override
+  _LineChartSample2State createState() => _LineChartSample2State();
+}
+
+class _LineChartSample2State extends State<LineChartSample2> {
+  List<Color> gradientColors = [
+    const Color(0xff23b6e6),
+    const Color(0xff02d39a),
+  ];
+
+  bool showAvg = false;
+
+  //function to convert timestamp to number
 double timestampToNumber(String timestamp) {
   int hour, min;
   if (timestamp.substring(11,12) == '0') {
@@ -20,18 +36,22 @@ double timestampToNumber(String timestamp) {
 }
 
 //function to convert List<Entry> to List<FlSpot>
-List<FlSpot> entryToFlSpot(List<Entry> entries) {
+List<FlSpot> entryToFlSpot(List<Entry> entries, String timestamp) {
   List<FlSpot> flSpotList = new List<FlSpot>();
   String pmfine;
   for (int i = 0; i < entries.length; i++) {
-    pmfine = double.parse(entries[i].pmfine.t).toStringAsFixed(2);
-    flSpotList.add(FlSpot(timestampToNumber(entries[i].timestamp.t), double.parse(pmfine)));
+    if (timestamp != null) {
+      if (timestamp.substring(0,10) == entries[i].timestamp.t.substring(0,10)) {
+        pmfine = double.parse(entries[i].pmfine.t).toStringAsFixed(2);
+        flSpotList.add(FlSpot(timestampToNumber(entries[i].timestamp.t), double.parse(pmfine)));
+      }
+    }
   }
   return flSpotList;
 }
 
 //function to get hourly avg PM2.5 from List<Entry>
-List<FlSpot> getAvgPm(List<Entry> entries) {
+List<FlSpot> getAvgPm(List<Entry> entries, String timestamp) {
   List<FlSpot> flSpotList = new List<FlSpot>();
   List<double> pmTot = new List<double>(24); //total pm
   List<int> pmNum = new List<int>(24); //number of entries for that hour
@@ -43,14 +63,18 @@ List<FlSpot> getAvgPm(List<Entry> entries) {
   int maxHour;
   int hour;
   for (int i = 0; i < entries.length; i++) {
-    if (entries[i].timestamp.t.substring(11,12) == '0') {
-    hour = int.parse(entries[i].timestamp.t.substring(12,13));
-  } else {
-    hour = int.parse(entries[i].timestamp.t.substring(11,13));
-  }
-    pmTot[hour] += double.parse(entries[i].pmfine.t);
-    pmNum[hour]++;
-    if (i == entries.length -1) maxHour = hour;
+    if (timestamp != null) {
+      if (timestamp.substring(0,10) == entries[i].timestamp.t.substring(0,10)) {
+        if (entries[i].timestamp.t.substring(11,12) == '0') {
+          hour = int.parse(entries[i].timestamp.t.substring(12,13));
+        } else {
+          hour = int.parse(entries[i].timestamp.t.substring(11,13));
+        }
+          pmTot[hour] += double.parse(entries[i].pmfine.t);
+          pmNum[hour]++;
+          if (i == entries.length -1) maxHour = hour;
+      }
+    }
   }
   double avg;
   String avgString;
@@ -68,21 +92,6 @@ List<FlSpot> getAvgPm(List<Entry> entries) {
   }
   return flSpotList;
 }
-
-class LineChartSample2 extends StatefulWidget {
-  final List<Entry> entries;
-  LineChartSample2({Key key, @required this.entries}) : super(key: key);
-  @override
-  _LineChartSample2State createState() => _LineChartSample2State();
-}
-
-class _LineChartSample2State extends State<LineChartSample2> {
-  List<Color> gradientColors = [
-    const Color(0xff23b6e6),
-    const Color(0xff02d39a),
-  ];
-
-  bool showAvg = false;
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +222,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
       minY: 0,
       lineBarsData: [
         LineChartBarData(
-          spots: entryToFlSpot(widget.entries),
+          spots: entryToFlSpot(widget.entries, widget.timestamp),
           isCurved: true,
           colors: gradientColors,
           barWidth: 5,
@@ -319,7 +328,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
       minY: 0,
       lineBarsData: [
         LineChartBarData(
-          spots: getAvgPm(widget.entries),
+          spots: getAvgPm(widget.entries, widget.timestamp),
           isCurved: true,
           colors: gradientColors,
           barWidth: 5,
