@@ -222,19 +222,25 @@ String parseValue(String value, String field) {
   double val = double.tryParse(value);
   if (val == null) { 
     if (field == "pmfine") {
-      return 'PM\u2082\u002e\u2085: No Data';
+      //return 'PM\u2082\u002e\u2085: No Data';
+      return 'No Data';
    } else if (field == "temp") {
-      return 'Temperature: No Data';
+      //return 'Temperature: No Data';
+      return 'No Data';
     } else if (field == "rh") {
-      return 'Relative Humidity: No Data';
+      //return 'Relative Humidity: No Data';
+      return 'No Data';
     }
   } else {
     if (field == "pmfine") {
-      return 'PM\u2082\u002e\u2085: ' + val.toStringAsFixed(2) + '\u03BCg/m\u00B3';
+      //return 'PM\u2082\u002e\u2085: ' + val.toStringAsFixed(2) + '\u03BCg/m\u00B3';
+      return val.toStringAsFixed(2) + '\u03BCg/m\u00B3';
     } else if (field == "temp") {
-      return 'Temperature: ' + val.toStringAsFixed(2) + '\u2103';
+     // return 'Temperature: ' + val.toStringAsFixed(2) + '\u2103';
+     return val.toStringAsFixed(2) + '\u2103';
     } else if (field == "rh") {
-      return 'Relative Humidity: ' + val.toStringAsFixed(2) + '%';
+      //return 'Relative Humidity: ' + val.toStringAsFixed(2) + '%';
+      return val.toStringAsFixed(2) + '%';
     }
   }
   return 'No Data';
@@ -283,10 +289,8 @@ Material lastEntryTile(ResponseWidget lastEntry) {
     borderRadius: BorderRadius.circular(12.0),
       child: Padding(
         padding:const EdgeInsets.all(8.0),
-      child: Row(mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Column(
-            children: <Widget>[
               Text('Last Data Entry',
               textAlign: TextAlign.center,
                 style: 
@@ -297,43 +301,85 @@ Material lastEntryTile(ResponseWidget lastEntry) {
                   )
               ),
               Text(
-                'Timestamp: ' + lastEntry.timestamp,
-                textAlign: TextAlign.left,
+                lastEntry.timestamp,
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.blue,
+                  color: Colors.blueGrey,
                   fontSize:15.0
                 )
               ),
+              Expanded(child:
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Padding(padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child:  Column(children: <Widget>[
               Text(
-                parseValue(lastEntry.pmfine, "pmfine"),
-                textAlign: TextAlign.left,
+                'PM\u2082\u002e\u2085',
+                textAlign: TextAlign.center,
                 style:TextStyle(
-                  color: Colors.blue,
+                  color: Colors.blueGrey,
                   fontSize:15.0,
                 )),
+                Text(
+                parseValue(lastEntry.pmfine, "pmfine"),
+                textAlign: TextAlign.center,
+                style:TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                  fontSize:18.0,
+                )),
+            
+            ])
+            ),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child:  Column(children: <Widget>[
               Text(
+                'Temperature',
+                textAlign: TextAlign.center,
+                style:TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize:15.0,
+                )),
+                Text(
                 parseValue(lastEntry.temperature, "temp"),
-                textAlign: TextAlign.left,
-                style: TextStyle(
+                textAlign: TextAlign.center,
+                style:TextStyle(
                   color: Colors.blue,
-                  fontSize:15.0
-                )
-              ),
+                  fontWeight: FontWeight.bold,
+                  fontSize:18.0,
+                )),
+            
+            ])
+            ),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child:  Column(children: <Widget>[
               Text(
+                'Relative Humidity',
+                textAlign: TextAlign.center,
+                style:TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize:15.0,
+                )),
+                Text(
                 parseValue(lastEntry.humidity, "rh"),
-                textAlign: TextAlign.left,
-                style: TextStyle(
+                textAlign: TextAlign.center,
+                style:TextStyle(
                   color: Colors.blue,
-                  fontSize:15.0
-                )
-              ),
+                  fontWeight: FontWeight.bold,
+                  fontSize:18.0,
+                )),
+            
+            ])
+            ),
             ]
-          )
-        ])
-  ));
+        )
+  )])));
 }
 
 Material dailyAvgTile(ResponseWidget dailyAvg) {
+  /*
   return Material(
     color: Colors.white,
     elevation: 14.0,
@@ -380,7 +426,93 @@ Material dailyAvgTile(ResponseWidget dailyAvg) {
             ]
           )
         ])
-  ));
+  ));*/
+  return Material(
+    color: Colors.white,
+    elevation: 14.0,
+    shadowColor: Color(0x802196F3),
+    borderRadius: BorderRadius.circular(12.0),
+      child: Padding(
+        padding:const EdgeInsets.all(8.0),
+      child: Column(mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+              Text('Today\'s Averages',
+              textAlign: TextAlign.center,
+                style: 
+                  TextStyle(
+                    color: Colors.blueGrey,
+                    fontSize:18.0,
+                    fontWeight: FontWeight.bold,
+                  )
+              ),
+              Expanded(child:
+              Padding(padding: EdgeInsets.only(top:5.0), child:
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child:  Column(children: <Widget>[
+              Text(
+                'PM\u2082\u002e\u2085',
+                textAlign: TextAlign.center,
+                style:TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize:15.0,
+                )),
+                Text(
+                parseValue(dailyAvg.pmfine, "pmfine"),
+                textAlign: TextAlign.center,
+                style:TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                  fontSize:18.0,
+                )),
+            
+            ])
+            ),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child:  Column(children: <Widget>[
+              Text(
+                'Temperature',
+                textAlign: TextAlign.center,
+                style:TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize:15.0,
+                )),
+                Text(
+                parseValue(dailyAvg.temperature, "temp"),
+                textAlign: TextAlign.center,
+                style:TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                  fontSize:18.0,
+                )),
+            
+            ])
+            ),
+            Padding(padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child:  Column(children: <Widget>[
+              Text(
+                'Relative Humidity',
+                textAlign: TextAlign.center,
+                style:TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize:15.0,
+                )),
+                Text(
+                parseValue(dailyAvg.humidity, "rh"),
+                textAlign: TextAlign.center,
+                style:TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                  fontSize:18.0,
+                )),
+            
+            ])
+            ),
+            ]
+        ))
+  )])));
 }
 
   Material pmChartTile(LineChartSample2 lineChart) {
