@@ -1,70 +1,4 @@
 PODS:
-  - Firebase/Analytics (6.23.0):
-    - Firebase/Core
-  - Firebase/Auth (6.23.0):
-    - Firebase/CoreOnly
-    - FirebaseAuth (~> 6.5.2)
-  - Firebase/Core (6.23.0):
-    - Firebase/CoreOnly
-    - FirebaseAnalytics (= 6.4.2)
-  - Firebase/CoreOnly (6.23.0):
-    - FirebaseCore (= 6.6.7)
-  - Firebase/Database (6.23.0):
-    - Firebase/CoreOnly
-    - FirebaseDatabase (~> 6.2.0)
-  - firebase_analytics (0.0.1):
-    - Firebase/Analytics (~> 6.0)
-    - Firebase/Core
-    - Flutter
-  - firebase_auth (0.0.1):
-    - Firebase/Auth (~> 6.0)
-    - Firebase/Core
-    - Flutter
-  - firebase_core (0.0.1):
-    - Firebase/Core
-    - Flutter
-  - firebase_core_web (0.1.0):
-    - Flutter
-  - firebase_database (0.0.1):
-    - Firebase/Database
-    - Flutter
-  - FirebaseAnalytics (6.4.2):
-    - FirebaseCore (~> 6.6)
-    - FirebaseInstallations (~> 1.2)
-    - GoogleAppMeasurement (= 6.4.2)
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
-    - GoogleUtilities/MethodSwizzler (~> 6.0)
-    - GoogleUtilities/Network (~> 6.0)
-    - "GoogleUtilities/NSData+zlib (~> 6.0)"
-    - nanopb (= 0.3.9011)
-  - FirebaseAuth (6.5.2):
-    - FirebaseAuthInterop (~> 1.0)
-    - FirebaseCore (~> 6.6)
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.5)
-    - GoogleUtilities/Environment (~> 6.5)
-    - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseAuthInterop (1.1.0)
-  - FirebaseCore (6.6.7):
-    - FirebaseCoreDiagnostics (~> 1.2)
-    - FirebaseCoreDiagnosticsInterop (~> 1.2)
-    - GoogleUtilities/Environment (~> 6.5)
-    - GoogleUtilities/Logger (~> 6.5)
-  - FirebaseCoreDiagnostics (1.2.4):
-    - FirebaseCoreDiagnosticsInterop (~> 1.2)
-    - GoogleDataTransportCCTSupport (~> 3.0)
-    - GoogleUtilities/Environment (~> 6.5)
-    - GoogleUtilities/Logger (~> 6.5)
-    - nanopb (~> 0.3.901)
-  - FirebaseCoreDiagnosticsInterop (1.2.0)
-  - FirebaseDatabase (6.2.0):
-    - FirebaseAuthInterop (~> 1.0)
-    - FirebaseCore (~> 6.0)
-    - leveldb-library (~> 1.22)
-  - FirebaseInstallations (1.2.0):
-    - FirebaseCore (~> 6.6)
-    - GoogleUtilities/Environment (~> 6.6)
-    - GoogleUtilities/UserDefaults (~> 6.6)
-    - PromisesObjC (~> 1.2)
   - Flutter (1.0.0)
   - flutter_plugin_android_lifecycle (0.0.1):
     - Flutter
@@ -80,66 +14,24 @@ PODS:
   - google_maps_flutter (0.0.1):
     - Flutter
     - GoogleMaps
-  - GoogleAppMeasurement (6.4.2):
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
-    - GoogleUtilities/MethodSwizzler (~> 6.0)
-    - GoogleUtilities/Network (~> 6.0)
-    - "GoogleUtilities/NSData+zlib (~> 6.0)"
-    - nanopb (= 0.3.9011)
-  - GoogleDataTransport (6.0.0)
-  - GoogleDataTransportCCTSupport (3.0.0):
-    - GoogleDataTransport (~> 6.0)
-    - nanopb (~> 0.3.901)
   - GoogleMaps (2.7.0):
     - GoogleMaps/Maps (= 2.7.0)
   - GoogleMaps/Base (2.7.0)
   - GoogleMaps/Maps (2.7.0):
     - GoogleMaps/Base
-  - GoogleUtilities/AppDelegateSwizzler (6.6.0):
-    - GoogleUtilities/Environment
-    - GoogleUtilities/Logger
-    - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.6.0):
-    - PromisesObjC (~> 1.2)
-  - GoogleUtilities/Logger (6.6.0):
-    - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (6.6.0):
-    - GoogleUtilities/Logger
-  - GoogleUtilities/Network (6.6.0):
-    - GoogleUtilities/Logger
-    - "GoogleUtilities/NSData+zlib"
-    - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.6.0)"
-  - GoogleUtilities/Reachability (6.6.0):
-    - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (6.6.0):
-    - GoogleUtilities/Logger
-  - GTMSessionFetcher/Core (1.3.1)
-  - leveldb-library (1.22)
   - location_permissions (2.0.5):
     - Flutter
-  - nanopb (0.3.9011):
-    - nanopb/decode (= 0.3.9011)
-    - nanopb/encode (= 0.3.9011)
-  - nanopb/decode (0.3.9011)
-  - nanopb/encode (0.3.9011)
   - path_provider (0.0.1):
     - Flutter
   - path_provider_macos (0.0.1):
     - Flutter
   - permission_handler (3.3.0):
     - Flutter
-  - PromisesObjC (1.2.8)
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
 
 DEPENDENCIES:
-  - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
-  - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
-  - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
-  - firebase_core_web (from `.symlinks/plugins/firebase_core_web/ios`)
-  - firebase_database (from `.symlinks/plugins/firebase_database/ios`)
   - Flutter (from `Flutter`)
   - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -154,37 +46,10 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Firebase
-    - FirebaseAnalytics
-    - FirebaseAuth
-    - FirebaseAuthInterop
-    - FirebaseCore
-    - FirebaseCoreDiagnostics
-    - FirebaseCoreDiagnosticsInterop
-    - FirebaseDatabase
-    - FirebaseInstallations
     - FMDB
-    - GoogleAppMeasurement
-    - GoogleDataTransport
-    - GoogleDataTransportCCTSupport
     - GoogleMaps
-    - GoogleUtilities
-    - GTMSessionFetcher
-    - leveldb-library
-    - nanopb
-    - PromisesObjC
 
 EXTERNAL SOURCES:
-  firebase_analytics:
-    :path: ".symlinks/plugins/firebase_analytics/ios"
-  firebase_auth:
-    :path: ".symlinks/plugins/firebase_auth/ios"
-  firebase_core:
-    :path: ".symlinks/plugins/firebase_core/ios"
-  firebase_core_web:
-    :path: ".symlinks/plugins/firebase_core_web/ios"
-  firebase_database:
-    :path: ".symlinks/plugins/firebase_database/ios"
   Flutter:
     :path: Flutter
   flutter_plugin_android_lifecycle:
@@ -209,20 +74,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
-  Firebase: 585ae467b3edda6a5444e788fda6888f024d8d6f
-  firebase_analytics: dacdcfc524d722fff13dcff942f0dfa47e6be567
-  firebase_auth: d99b993c1405096e66c58211b1cd956c23eed1c5
-  firebase_core: 0d8be0e0d14c4902953aeb5ac5d7316d1fe4b978
-  firebase_core_web: d501d8b946b60c8af265428ce483b0fff5ad52d1
-  firebase_database: ba12319259e324c8e52e5e4efc8c6f3d33da1ee3
-  FirebaseAnalytics: 558f7a03d19de451093032c806f39d5f9dff096e
-  FirebaseAuth: e50319ecc114acf93c2b9581e15d6604ddd7eeb2
-  FirebaseAuthInterop: a0f37ae05833af156e72028f648d313f7e7592e9
-  FirebaseCore: a2788a0d5f6c1dff17b8f79b4a73654a8d4bfdbd
-  FirebaseCoreDiagnostics: b59c024493a409f8aecba02c99928d0d8431d159
-  FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
-  FirebaseDatabase: cbf2b9efe39b3f113616a2f1f140839f49d797e0
-  FirebaseInstallations: 2119fb3e46b0a88bfdbf12562f855ee3252462fa
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_plugin_android_lifecycle: 47de533a02850f070f5696a623995e93eddcdb9b
   fluttertoast: b644586ef3b16f67fae9a1f8754cef6b2d6b634b
@@ -230,19 +81,11 @@ SPEC CHECKSUMS:
   geolocator: 460cc8e850b616f8c0e90944c86517d91ccbb686
   google_api_availability: 15fa42a8cd83c0a6738507ffe6e87096f12abcb8
   google_maps_flutter: d0dd62f5a7d39bae61057eb9f52dd778d99c7c6c
-  GoogleAppMeasurement: 2253e99c1f22638cf234c059144660c338ad76c3
-  GoogleDataTransport: 061fe7d9b476710e3cd8ea51e8e07d8b67c2b420
-  GoogleDataTransportCCTSupport: 0f39025e8cf51f168711bd3fb773938d7e62ddb5
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
-  GoogleUtilities: 39530bc0ad980530298e9c4af8549e991fd033b1
-  GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
-  leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   location_permissions: 4a49d4e5bec5b653643e551ab77963cc99bb0e4a
-  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
   permission_handler: 67637977b227d62d46bfbf524f335f8568de5a73
-  PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83

@@ -3,13 +3,12 @@ import 'dart:math';
 import 'package:airemory/pmStats_widget.dart';
 import 'package:airemory/report_widget.dart';
 import 'package:airemory/response_widget.dart';
-import 'package:firebase_database/firebase_database.dart';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 
 
 import 'package:intl/intl.dart';
@@ -46,7 +45,7 @@ class PinData {
       });
 }
 
-var notesReference = FirebaseDatabase.instance.reference().child('1xqrk4AK9gWJ4nbS5MMQMtLaeNTbylfdEboVlgU2ut7o').child('Sheet1');
+
 
 
 // Request to get the first and second sheet(current day, yesterday)
@@ -78,8 +77,12 @@ class _MapState extends State<MapWidget> {
  int thereIsData = 0; //0 or 1, to tell if there is data for the current day
 
  BitmapDescriptor _sourceIcon;
- //BitmapDescriptor _yellowIcon;
- //BitmapDescriptor _sourceIcon;
+ BitmapDescriptor _yellowIcon;
+ BitmapDescriptor _orangeIcon;
+ BitmapDescriptor _maroonIcon;
+ BitmapDescriptor _greenIcon;
+ BitmapDescriptor _purpleIcon;
+ BitmapDescriptor _redIcon;
 
  // Function to get the last data entry and its list index
 ResponseWidget lastEntry(List<Entry> entryList, String timestamp) {
@@ -288,6 +291,22 @@ Widget _child = Center(
 void _setSourceIcon() async {
   _sourceIcon = await BitmapDescriptor.fromAssetImage(
       ImageConfiguration(devicePixelRatio: 2.5), 'assets/pin.png');
+  BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/green.png').then((onValue) {
+      _greenIcon = onValue;
+    });
+  _maroonIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/maroon.png');
+  _orangeIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/orange.png');
+  BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/purple.png').then((onValue) {
+      _purpleIcon = onValue;
+    });
+  _redIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/red.png');
+  _yellowIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/yellow.png');
 }
 
 void _getCurrentLocation() async {
@@ -326,7 +345,7 @@ String _getStatus(String value){
      
   }
 
-/*
+
 String _getPin(String value){
     int aqii;
     try {
@@ -356,7 +375,7 @@ String _getPin(String value){
     }
      
   }
-*/
+
 //the markers for each sensor 
 /*
 when the markers are touched(onTap()), it populates currentpindata with the pin
@@ -367,7 +386,7 @@ Set<Marker> _createMarker() {
       Marker(
           markerId: MarkerId('home'),
           position: LatLng(33.7902108,-84.3287008),
-          icon: _sourceIcon,
+          icon: _yellowIcon,
           onTap: () {
             setState(() {
               _currentPinData = _firstPinInfo;
@@ -390,10 +409,12 @@ Set<Marker> _createMarker() {
 
   @override
   void initState() {
-    _getCurrentLocation();
-    _setSourceIcon();
+    
     super.initState();
+    _setSourceIcon();
+    _getCurrentLocation();
     post = fetchPost();
+    
   }
 
   Widget _mapWidget() {
@@ -425,7 +446,7 @@ Set<Marker> _createMarker() {
     //String aqiDescriptionText = getAqiLevel(aqi);
     String aaqi = aqi.toString();
     _firstPinInfo = PinData(
-        pinPath: 'assets/pin.png',
+        pinPath: _getPin(aaqi),
         pmStats: aaqi,
         description:
           'Coffee bar chain offering house-roasted direct-trade coffee, along with brewing gear & whole beans',
@@ -570,7 +591,7 @@ Set<Marker> _createMarker() {
             Navigator.push(context, MaterialPageRoute(
               builder: (BuildContext context) {
                 return Scaffold(
-                  appBar: AppBar(title: Text('My Page')),
+                  appBar: AppBar(title: Text('Math and Science Center Roof')),
                   body: Stack(
                       children: <Widget>[
                         ReportWidget(),   
