@@ -25,7 +25,7 @@ dependencies:
 
   google_maps_flutter: any
 
-  
+  nice_button: ^0.1.7
 
   geolocator: ^5.1.5
 
@@ -68,6 +68,7 @@ flutter:
     - assets/purple.png
     - assets/green.png
     - assets/cloud.png
+    - assets/msc.jpg
 
 
   # To add assets to your application, add an assets section, like this:
