@@ -11,7 +11,10 @@ class FAQ extends StatelessWidget{
             children: <Widget>[
               Container(
                 height: 110,
-                child: const Center(child: Text('1) Q: Do you have plans to monitor carbon monoxide, sulfur dioxide, and/or nitrogen dioxide in the future?   A: In short, no. We do not plan on measuring these value, that is not to say we have ruled them out or will not in the future. The original plan was to measure PM2.5; however, as our team grows so do our projects.'))
+                child: const Center(child: Text(
+              '${_currentPinData.pmStats} ',
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 4.0, color: Colors.blue),
+            ), Text('1) Q: Do you have plans to monitor carbon monoxide, sulfur dioxide, and/or nitrogen dioxide in the future?   A: In short, no. We do not plan on measuring these value, that is not to say we have ruled them out or will not in the future. The original plan was to measure PM2.5; however, as our team grows so do our projects.'))
               ),
               Container(
                 height: 110,
