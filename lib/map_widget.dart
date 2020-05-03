@@ -579,40 +579,7 @@ Set<Marker> _createMarker() {
   }
 
   
-/*\
-  Widget _buildMarkerType() {
-    return Padding(
-      padding: EdgeInsets.all(15),
-      child: Image.asset(
-        _currentPinData.pinPath,
-        width: 60,
-        height: 60,
-      ),
-    );
-  }
-*/
-/*
-NiceButton(
-              width: 255,
-              elevation: 8.0,
-              radius: 52.0,
-              text: "Go to the report",
-              background: Colors.blue,
-              onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(
-              builder: (BuildContext context) {
-                return Scaffold(
-                  /*appBar: AppBar(title: Text('Math and Science Center Roof')),*/
-                  body: Stack(
-                      children: <Widget>[
-                        ReportWidget(),   
-                      ],
-                  )
-                );
-              }),);
-                  },
-            ),
-            */
+
 
 //container that displays lat and long info
   Widget _buildLocationInfo() {

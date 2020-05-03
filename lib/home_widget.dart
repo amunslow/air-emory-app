@@ -1,9 +1,8 @@
 import 'package:airemory/faq1_widget.dart';
 import 'package:flutter/material.dart';
 import 'map_widget.dart';
-import 'placeholder_widget.dart';
 import 'report_widget.dart';
-import 'package:airemory/faq_widget';
+
 
 class Home extends StatefulWidget {
  @override
