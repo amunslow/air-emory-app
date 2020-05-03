@@ -13,6 +13,7 @@ import 'dart:async';
 
 import 'package:intl/intl.dart';
 import 'package:instant/instant.dart';
+import 'package:nice_button/NiceButton.dart';
 import 'response_widget.dart';
 import 'pmStats_widget.dart';
 
@@ -453,7 +454,7 @@ Set<Marker> _createMarker() {
         locationName: "MSC",
         timeStamp: DateTime.now(), 
         locationCoords: LatLng(33.7902108,-84.3287008),
-        avatarPath: "assets/flower.jpeg",
+        avatarPath: "assets/msc.jpg",
         labelColor: Colors.blue);
       
   }
@@ -533,7 +534,7 @@ Set<Marker> _createMarker() {
                                       children: <Widget>[
                                         _buildAvatar(),
                                         _buildLocationInfo(),
-                                        _buildMarkerType()
+                                        //_buildMarkerType()
                                       ]
                                     )
                                   )
@@ -555,52 +556,65 @@ Set<Marker> _createMarker() {
 
   Widget _buildAvatar() {
     return Container(
-      margin: EdgeInsets.only(left: 10),
-      width: 100,
-      height: 100,
-      child: ClipOval(
-        child: Image.asset(
+      margin: EdgeInsets.only(left: 15),
+      width: 150,
+      height: 150,
+      child: Column(
+        children: <Widget>[
+          Container( 
+            width: 150,
+            height: 150,
+            child: ClipOval( 
+            child: Image.asset(
           _currentPinData.avatarPath,
           fit: BoxFit.cover,
         ),
       ),
-    );
+
+          )
+          
+      ]
+    ));
+    
   }
 
-  Widget _buildMarkerType() {
-    return Padding(
-      padding: EdgeInsets.all(15),
-      child: Image.asset(
-        _currentPinData.pinPath,
-        width: 60,
-        height: 60,
-      ),
-    );
-  }
+  
+
+
 //container that displays lat and long info
   Widget _buildLocationInfo() {
     return Expanded(
       child: Container(
         margin: EdgeInsets.only(left: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          //crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              _currentPinData.locationName,
-              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0),
+              '${_currentPinData.locationName}   ',
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.5),
+            ),
+            
+            Text(
+              'AQI:   ',
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
             ),
             Text(
-              'AQI : ${_currentPinData.pmStats}',
-              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),
+              '${_currentPinData.pmStats} ',
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 4.0, color: Colors.blue),
             ),
-            Text(
-              _getStatus(_currentPinData.pmStats),
-              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),
+            Text( 
+              '${_getStatus(_currentPinData.pmStats)}   ',
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.7, color: Colors.green),
             ), 
+            
             RaisedButton(
+          shape: RoundedRectangleBorder(
+  borderRadius: BorderRadius.circular(18.0),
+  side: BorderSide(color: Colors.blueGrey)
+      ),
           color: Colors.blue,
-          child: Text('Go to the report'),
+          child: Text('Go to the report', style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3, color: Colors.white)),
           onPressed: () {
             //Use`Navigator` widget to pop oir go back to previous route / screen
             Navigator.push(context, MaterialPageRoute(
