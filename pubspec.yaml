@@ -27,6 +27,8 @@ dependencies:
 
   nice_button: ^0.1.7
 
+  peek_and_pop: any
+
   geolocator: ^5.1.5
 
   permission_handler: ^3.0.1

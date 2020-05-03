@@ -1,3 +1,4 @@
+import 'package:airemory/faq1_widget.dart';
 import 'package:flutter/material.dart';
 import 'map_widget.dart';
 import 'placeholder_widget.dart';
@@ -16,7 +17,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [ // list of our final widgets (pages)
    MapWidget(),
    ReportWidget(),
-   FAQ()
+   FAQtwo()
  ];
 
  @override
