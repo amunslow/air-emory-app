@@ -3,17 +3,17 @@ import 'dart:math';
 import 'package:airemory/pmStats_widget.dart';
 import 'package:airemory/report_widget.dart';
 import 'package:airemory/response_widget.dart';
-import 'package:firebase_database/firebase_database.dart';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+
 
 
 import 'package:intl/intl.dart';
 import 'package:instant/instant.dart';
+import 'package:nice_button/NiceButton.dart';
 import 'response_widget.dart';
 import 'pmStats_widget.dart';
 
@@ -46,7 +46,7 @@ class PinData {
       });
 }
 
-var notesReference = FirebaseDatabase.instance.reference().child('1xqrk4AK9gWJ4nbS5MMQMtLaeNTbylfdEboVlgU2ut7o').child('Sheet1');
+
 
 
 // Request to get the first and second sheet(current day, yesterday)
@@ -78,8 +78,12 @@ class _MapState extends State<MapWidget> {
  int thereIsData = 0; //0 or 1, to tell if there is data for the current day
 
  BitmapDescriptor _sourceIcon;
- //BitmapDescriptor _yellowIcon;
- //BitmapDescriptor _sourceIcon;
+ BitmapDescriptor _yellowIcon;
+ BitmapDescriptor _orangeIcon;
+ BitmapDescriptor _maroonIcon;
+ BitmapDescriptor _greenIcon;
+ BitmapDescriptor _purpleIcon;
+ BitmapDescriptor _redIcon;
 
  // Function to get the last data entry and its list index
 ResponseWidget lastEntry(List<Entry> entryList, String timestamp) {
@@ -288,6 +292,22 @@ Widget _child = Center(
 void _setSourceIcon() async {
   _sourceIcon = await BitmapDescriptor.fromAssetImage(
       ImageConfiguration(devicePixelRatio: 2.5), 'assets/pin.png');
+  BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/green.png').then((onValue) {
+      _greenIcon = onValue;
+    });
+  _maroonIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/maroon.png');
+  _orangeIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/orange.png');
+  BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/purple.png').then((onValue) {
+      _purpleIcon = onValue;
+    });
+  _redIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/red.png');
+  _yellowIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 2.5), 'assets/yellow.png');
 }
 
 void _getCurrentLocation() async {
@@ -326,7 +346,7 @@ String _getStatus(String value){
      
   }
 
-/*
+
 String _getPin(String value){
     int aqii;
     try {
@@ -356,7 +376,7 @@ String _getPin(String value){
     }
      
   }
-*/
+
 //the markers for each sensor 
 /*
 when the markers are touched(onTap()), it populates currentpindata with the pin
@@ -367,7 +387,7 @@ Set<Marker> _createMarker() {
       Marker(
           markerId: MarkerId('home'),
           position: LatLng(33.7902108,-84.3287008),
-          icon: _sourceIcon,
+          icon: _yellowIcon,
           onTap: () {
             setState(() {
               _currentPinData = _firstPinInfo;
@@ -390,10 +410,12 @@ Set<Marker> _createMarker() {
 
   @override
   void initState() {
-    _getCurrentLocation();
-    _setSourceIcon();
+    
     super.initState();
+    _setSourceIcon();
+    _getCurrentLocation();
     post = fetchPost();
+    
   }
 
   Widget _mapWidget() {
@@ -425,14 +447,14 @@ Set<Marker> _createMarker() {
     //String aqiDescriptionText = getAqiLevel(aqi);
     String aaqi = aqi.toString();
     _firstPinInfo = PinData(
-        pinPath: 'assets/pin.png',
+        pinPath: _getPin(aaqi),
         pmStats: aaqi,
         description:
           'Coffee bar chain offering house-roasted direct-trade coffee, along with brewing gear & whole beans',
         locationName: "MSC",
         timeStamp: DateTime.now(), 
         locationCoords: LatLng(33.7902108,-84.3287008),
-        avatarPath: "assets/flower.jpeg",
+        avatarPath: "assets/msc.jpg",
         labelColor: Colors.blue);
       
   }
@@ -444,6 +466,21 @@ Set<Marker> _createMarker() {
     
         
     return Scaffold(
+      appBar: AppBar(
+       title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                  Image.asset(
+                 'assets/cloud.png',
+                  fit: BoxFit.contain,
+                  height: 32,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(8.0), child: Text('Air Emory'))
+            ],
+
+          ),
+     ),
       body: Container(
           child: FutureBuilder(
             future: post,
@@ -497,7 +534,7 @@ Set<Marker> _createMarker() {
                                       children: <Widget>[
                                         _buildAvatar(),
                                         _buildLocationInfo(),
-                                        _buildMarkerType()
+                                        //_buildMarkerType()
                                       ]
                                     )
                                   )
@@ -519,58 +556,71 @@ Set<Marker> _createMarker() {
 
   Widget _buildAvatar() {
     return Container(
-      margin: EdgeInsets.only(left: 10),
-      width: 100,
-      height: 100,
-      child: ClipOval(
-        child: Image.asset(
+      margin: EdgeInsets.only(left: 15),
+      width: 150,
+      height: 150,
+      child: Column(
+        children: <Widget>[
+          Container( 
+            width: 150,
+            height: 150,
+            child: ClipOval( 
+            child: Image.asset(
           _currentPinData.avatarPath,
           fit: BoxFit.cover,
         ),
       ),
-    );
+
+          )
+          
+      ]
+    ));
+    
   }
 
-  Widget _buildMarkerType() {
-    return Padding(
-      padding: EdgeInsets.all(15),
-      child: Image.asset(
-        _currentPinData.pinPath,
-        width: 60,
-        height: 60,
-      ),
-    );
-  }
+  
+
+
 //container that displays lat and long info
   Widget _buildLocationInfo() {
     return Expanded(
       child: Container(
         margin: EdgeInsets.only(left: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          //crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              _currentPinData.locationName,
-              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0),
+              '${_currentPinData.locationName}   ',
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.5),
+            ),
+            
+            Text(
+              'AQI:   ',
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3),
             ),
             Text(
-              'AQI : ${_currentPinData.pmStats}',
-              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),
+              '${_currentPinData.pmStats} ',
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 4.0, color: Colors.blue),
             ),
-            Text(
-              _getStatus(_currentPinData.pmStats),
-              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),
+            Text( 
+              '${_getStatus(_currentPinData.pmStats)}   ',
+              style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.7, color: Colors.green),
             ), 
+            
             RaisedButton(
+          shape: RoundedRectangleBorder(
+  borderRadius: BorderRadius.circular(18.0),
+  side: BorderSide(color: Colors.blueGrey)
+      ),
           color: Colors.blue,
-          child: Text('Go to the report'),
+          child: Text('Go to the report', style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.3, color: Colors.white)),
           onPressed: () {
             //Use`Navigator` widget to pop oir go back to previous route / screen
             Navigator.push(context, MaterialPageRoute(
               builder: (BuildContext context) {
                 return Scaffold(
-                  appBar: AppBar(title: Text('My Page')),
+                  /*appBar: AppBar(title: Text('Math and Science Center Roof')),*/
                   body: Stack(
                       children: <Widget>[
                         ReportWidget(),   

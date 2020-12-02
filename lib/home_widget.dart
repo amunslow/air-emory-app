@@ -1,7 +1,8 @@
+import 'package:airemory/faq1_widget.dart';
 import 'package:flutter/material.dart';
 import 'map_widget.dart';
-import 'placeholder_widget.dart';
 import 'report_widget.dart';
+
 
 class Home extends StatefulWidget {
  @override
@@ -15,16 +16,29 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [ // list of our final widgets (pages)
    MapWidget(),
    ReportWidget(),
-   PlaceholderWidget(Colors.green)
+   FAQtwo()
  ];
 
  @override
  Widget build(BuildContext context) {
    return Scaffold(
      
-     appBar: AppBar(
-       title: Text('Air Emory'),
-     ),
+    /* appBar: AppBar(
+       title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                  Image.asset(
+                 'assets/cloud.png',
+                  fit: BoxFit.contain,
+                  height: 32,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(8.0), child: Text('Air Emory'))
+            ],
+
+          ),
+     ),*/
+   
     body: _children[_currentIndex],
      bottomNavigationBar: BottomNavigationBar(
        onTap: onTabTapped, 
